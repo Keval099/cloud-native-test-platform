@@ -1,0 +1,11 @@
+1. What is a process? -> A process is a running instance of a program/command.
+
+2. What is the difference between PID and PPID? -> PID = unique ID assigned to a process. PPID = PID of the process that created/started it.
+
+3. What is the difference between active and enabled? -> active = service is currently running/active. enabled = service is configured to start automatically when the appropriate systemd boot target is reached.
+
+4. What is the difference between systemctl and journalctl? -> systemctl is used to manage and inspect systemd units/services — status, start, stop, restart, enable, disable, etc. journalctl is used to view and filter logs stored in the systemd journal.
+
+5. What does journalctl -f do? -> Follow the journal and continuously display new log entries as they arrive.
+
+6. What does journalctl -u do? -> -u is doing the filtering.
