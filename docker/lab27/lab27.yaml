@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    container_name: lab27_backend
+    ports:
+      - "7788:8080"
+    volumes:
+      - ./data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]   
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    env_file:
+      - lab27.env
+  client:
+    image: python:3.9-slim
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: ["sleep", "3600"]
+  debug:
+    image: python:3.9-slim
+    command: ["sleep", "3600"]
+    profiles:
+      - debug
