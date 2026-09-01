@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: lab44-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: lab44
+
+  template:
+    metadata:
+      labels:
+        app: lab44
+
+    spec:
+      containers:
+        - name: app
+          image: python:3.9-slim
+          ports:
+            - containerPort: 8000
+          command:
+            - python
+            - -c
+            - |
+              import http.server
+
+              class Handler(http.server.BaseHTTPRequestHandler):
+                  def do_GET(self):
+                      self.send_response(200)
+                      self.end_headers()
+                      self.wfile.write(b"Hello from Kubernetes Service")
+
+              http.server.HTTPServer(("0.0.0.0", 8000), Handler).serve_forever()

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: lab46-service
+
+spec:
+  selector:
+    app: lab44
+
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+
+  type: ClusterIP

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lab58-pod
+
+spec:
+  restartPolicy: Never
+
+  containers:
+    - name: app
+      image: python:3.9-slim
+
+      command:
+        - python
+        - -c
+        - |
+          import os
+
+          print("Application:", os.environ.get("APP_NAME"))
+          print("Environment:", os.environ.get("ENVIRONMENT"))
+          print("Database password:", os.environ.get("DB_PASSWORD"))
+
+      env:
+        - name: APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: lab58-config
+              key: APP_NAME
+
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: lab58-config
+              key: ENVIRONMENT
+
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lab58-secret
+              key: DB_PASSWORD
