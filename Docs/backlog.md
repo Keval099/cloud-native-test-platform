@@ -11,10 +11,10 @@
 
 ## Containerization
 
-- [ ] Create Dockerfile
-- [ ] Create Docker Compose setup
-- [ ] Add container health checks
-- [ ] Troubleshoot container failures
+- [x] Create Dockerfile
+- [x] Create Docker Compose setup
+- [x] Add container health checks
+- [x] Troubleshoot container failures
 
 ## CI/CD
 
@@ -28,9 +28,9 @@
 
 ## AWS
 
-- [ ] Design VPC
+- [x] Design VPC
 - [ ] Configure IAM
-- [ ] Create ECR
+- [x] Create ECR
 - [ ] Create RDS
 - [ ] Create EKS
 - [ ] Configure ALB
@@ -48,16 +48,16 @@
 
 ## Kubernetes
 
-- [ ] Learn Pods
-- [ ] Learn Deployments
-- [ ] Learn Services
-- [ ] Learn Ingress
-- [ ] Learn ConfigMaps
-- [ ] Learn Secrets
-- [ ] Add health probes
-- [ ] Configure resource limits
+- [x] Learn Pods
+- [x] Learn Deployments
+- [x] Learn Services
+- [x] Learn Ingress
+- [x] Learn ConfigMaps
+- [x] Learn Secrets
+- [x] Add health probes
+- [x] Configure resource limits
 - [ ] Configure HPA
-- [ ] Practice troubleshooting
+- [x] Practice troubleshooting
 
 ## Observability
 
@@ -71,17 +71,17 @@
 ## Security
 
 - [ ] IAM least privilege
-- [ ] Container scanning
+- [x] Container scanning
 - [ ] Dependency scanning
 - [ ] Secrets management
-- [ ] Network security review
+- [x] Network security review
 
 ## Troubleshooting
 
-- [ ] Break Docker networking
-- [ ] Break database connectivity
-- [ ] Create ImagePullBackOff
-- [ ] Create CrashLoopBackOff
-- [ ] Break Kubernetes Service
-- [ ] Break deployment
-- [ ] Practice rollback
+- [x] Break Docker networking
+- [x] Break database connectivity
+- [x] Create ImagePullBackOff
+- [x] Create CrashLoopBackOff
+- [x] Break Kubernetes Service
+- [x] Break deployment
+- [x] Practice rollback

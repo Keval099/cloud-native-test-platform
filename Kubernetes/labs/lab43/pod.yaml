@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: lab43-pod
+
+spec:
+  containers:
+    - name: app
+      image: python:3.9-slim
+      command:
+        - python
+        - -c
+        - print("Hello from Kubernetes YAML")
