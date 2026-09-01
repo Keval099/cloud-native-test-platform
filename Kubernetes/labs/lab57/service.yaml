@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: lab57-service
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: lab57
+    version: green
+
+  ports:
+    - port: 80
+      targetPort: 8000

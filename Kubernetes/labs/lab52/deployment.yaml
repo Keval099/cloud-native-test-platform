@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: lab52-deployment
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: lab52
+
+  template:
+    metadata:
+      labels:
+        app: lab52
+
+    spec:
+      containers:
+        - name: app
+          image: python:3.9-slim
+
+          ports:
+            - containerPort: 8000
+
+          command:
+            - python
+            - -c
+            - |
+              import http.server
+
+              class Handler(http.server.BaseHTTPRequestHandler):
+                  def do_GET(self):
+                      if self.path == "/health":
+                          self.send_response(200)
+                          self.end_headers()
+                          self.wfile.write(b"OK")
+                      else:
+                          self.send_response(200)
+                          self.end_headers()
+                          self.wfile.write(b"Hello from Lab 52")
+
+              http.server.HTTPServer(("0.0.0.0", 8000), Handler).serve_forever()
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5

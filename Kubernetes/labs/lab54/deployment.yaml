@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: lab54-deployment
+
+spec:
+  replicas: 3
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+  selector:
+    matchLabels:
+      app: lab54
+
+  template:
+    metadata:
+      labels:
+        app: lab54
+
+    spec:
+      containers:
+        - name: app
+          image: python:3.9-slim
+
+          command:
+            - python
+            - -c
+            - |
+              import time
+              print("Application version: v3", flush=True)
+              raise Exception("v3 application failure")
+              while True:
+                  time.sleep(30)
