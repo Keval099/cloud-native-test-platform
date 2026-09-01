@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: lab53-broken-pod
+
+spec:
+  containers:
+    - name: app
+      image: python:3.9-slim
+      command:
+        - python
+        - -c
+        - |
+          print("Starting application...")
+          raise Exception("Application failed intentionally")

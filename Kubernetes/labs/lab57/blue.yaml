@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab57-blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lab57
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: lab57
+        version: blue
+    spec:
+      containers:
+        - name: app
+          image: python:3.9-slim
+          command:
+            - python
+            - -c
+            - |
+              import http.server
+
+              class Handler(http.server.BaseHTTPRequestHandler):
+                  def do_GET(self):
+                      self.send_response(200)
+                      self.end_headers()
+                      self.wfile.write(b"BLUE - Application version v1")
+
+              print("BLUE - Application version v1", flush=True)
+              http.server.HTTPServer(("0.0.0.0", 8000), Handler).serve_forever()

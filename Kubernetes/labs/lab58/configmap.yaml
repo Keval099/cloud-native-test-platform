@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lab58-config
+data:
+  APP_NAME: cloud-native-test-platform
+  ENVIRONMENT: dev
