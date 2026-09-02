@@ -1,10 +1,10 @@
-name: CI - Python Tests
+name: CI - Python Tests and Docker Build
 
 on:
   push:
 
 jobs:
-  test:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,6 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Build Docker image
+        run: docker build -f docker/labs/Dockerfile -t cloud-native-test-platform:ci .
