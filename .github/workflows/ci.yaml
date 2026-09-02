@@ -24,3 +24,10 @@ jobs:
 
       - name: Build Docker image
         run: docker build -f docker/labs/Dockerfile -t cloud-native-test-platform:ci .
+
+      - name: Scan Docker image with Trivy
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest \
+            image cloud-native-test-platform:ci
