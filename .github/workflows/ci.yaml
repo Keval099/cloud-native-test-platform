@@ -1,18 +1,18 @@
-name: Lab 59 CI
+name: Lab 60 CI
 
 on:
   push:
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Say hello
-        run: echo "Hello from GitHub Actions"
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Show current directory
         run: pwd
 
-      - name: List files
+      - name: List repository files
         run: ls -la
