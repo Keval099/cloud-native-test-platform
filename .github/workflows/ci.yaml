@@ -41,3 +41,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::825765413460:role/GitHubActions-ECR-CloudNativeTestPlatform
           aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-south-1 |
+          docker login --username AWS --password-stdin \
+            825765413460.dkr.ecr.ap-south-1.amazonaws.com
