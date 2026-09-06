@@ -3,6 +3,10 @@ name: CI - Python Tests and Docker Build
 on:
   push:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
@@ -31,3 +35,9 @@ jobs:
             -v /var/run/docker.sock:/var/run/docker.sock \
             aquasec/trivy:latest \
             image cloud-native-test-platform:ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::825765413460:role/GitHubActions-ECR-CloudNativeTestPlatform
+          aws-region: ap-south-1
