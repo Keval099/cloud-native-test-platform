@@ -52,3 +52,7 @@ jobs:
         run: |
           docker tag cloud-native-test-platform:ci \
             825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:ci
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:ci
