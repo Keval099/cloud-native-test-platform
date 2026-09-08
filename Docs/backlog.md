@@ -26,7 +26,7 @@
 - [ ] Add container health checks
 - [ ] Improve Docker image security
 - [x] Troubleshoot container failures
-- [ ] Document container troubleshooting
+- [x] Document container troubleshooting
 
 ---
 
@@ -47,10 +47,10 @@
 - [x] Authenticate Docker with Amazon ECR
 - [x] Tag Docker image for ECR
 - [x] Push Docker image to ECR
-- [ ] Use Git commit SHA for Docker image tags
-- [ ] Add immutable/versioned image tagging strategy
+- [x] Use Git commit SHA for Docker image tags
+- [x] Add versioned image tagging strategy
 - [ ] Configure Trivy to fail CI on HIGH/CRITICAL vulnerabilities
-- [ ] Deploy application to EKS
+- [x] Deploy application to EKS
 - [ ] Run deployment smoke tests
 - [ ] Add deployment rollback strategy
 
@@ -61,10 +61,13 @@
 ### IAM
 
 - [x] Create GitHub OIDC identity provider
-- [x] Create GitHub Actions IAM role
+- [x] Create GitHub Actions ECR IAM role
 - [x] Configure IAM trust relationship
-- [x] Restrict trust to repository and main branch
+- [x] Restrict ECR trust to repository and main branch
 - [x] Configure least-privilege ECR permissions
+- [x] Create separate GitHub Actions EKS deployment role
+- [x] Add EKS access entry for deployment role
+- [x] Scope EKS deployment access to the default namespace
 - [ ] Review IAM policies for further least-privilege improvements
 
 ### ECR
@@ -75,7 +78,7 @@
 - [x] Push Docker image automatically from GitHub Actions
 - [ ] Enable ECR scan-on-push
 - [ ] Define image retention/lifecycle policy
-- [ ] Implement immutable image versioning
+- [x] Implement SHA-based image versioning
 
 ### Networking
 
@@ -86,16 +89,16 @@
 - [x] Configure Internet Gateway
 - [x] Configure route tables
 - [x] Configure subnet associations
-- [x] Design security group communication between tiers
-- [ ] Configure NAT Gateway if required
-- [ ] Perform network security review
+- [ ] Design security group communication between tiers
+- [x] Configure NAT Gateway
+- [ ] Perform final network security review
 
 ### Compute / Platform
 
-- [ ] Create EKS cluster
-- [ ] Configure EKS worker nodes / compute
-- [ ] Deploy application to EKS
-- [ ] Configure Kubernetes networking
+- [x] Create EKS cluster
+- [x] Configure EKS managed worker nodes
+- [x] Deploy application to EKS
+- [x] Configure Kubernetes networking
 - [ ] Configure ALB integration
 
 ### Database
@@ -143,6 +146,7 @@
 ## Kubernetes Fundamentals
 
 - [x] Learn Pods
+- [x] Learn Nodes
 - [x] Learn Deployments
 - [x] Learn ReplicaSets
 - [x] Learn Services
@@ -162,8 +166,8 @@
 - [x] Practice rolling updates
 - [x] Practice deployment rollback
 - [x] Practice Blue-Green deployment
-- [ ] Deploy the actual application to Kubernetes
-- [ ] Deploy the application to EKS
+- [x] Deploy the actual application to Kubernetes
+- [x] Deploy the application to EKS
 
 ---
 
@@ -205,8 +209,8 @@
 - [ ] ECR scan-on-push
 - [ ] Network security review
 - [ ] Kubernetes security review
-- [ ] IAM role review
-- [ ] Security testing in CI/CD
+- [x] IAM role separation for ECR and EKS
+- [x] Security checks in CI/CD
 
 ---
 
@@ -217,16 +221,16 @@
 - [x] Troubleshoot Kubernetes application failures
 - [x] Create CrashLoopBackOff
 - [x] Troubleshoot CrashLoopBackOff
-- [ ] Create ImagePullBackOff
+- [x] Create ImagePullBackOff
 - [ ] Troubleshoot ImagePullBackOff
 - [x] Break Kubernetes Service configuration
 - [x] Troubleshoot deployment problems
 - [x] Practice Kubernetes rollback
 - [ ] Troubleshoot database connectivity
-- [ ] Troubleshoot ECR authentication
+- [x] Troubleshoot ECR authentication
 - [x] Troubleshoot GitHub OIDC authentication
-- [ ] Troubleshoot EKS deployment failures
-- [ ] Document common troubleshooting workflows
+- [x] Troubleshoot EKS deployment/node-join failure
+- [x] Document common troubleshooting workflows
 
 ---
 
@@ -241,25 +245,26 @@
 - [x] Document ECR integration
 - [x] Document Kubernetes fundamentals
 - [x] Document Blue-Green deployment
-- [ ] Document AWS architecture
-- [ ] Document EKS architecture
+- [x] Document AWS architecture
+- [x] Document EKS architecture
 - [ ] Document Terraform architecture
 - [ ] Document observability architecture
 - [ ] Add architecture diagrams
 - [ ] Add deployment runbook
-- [ ] Add troubleshooting runbook
+- [x] Add troubleshooting notes
 
 ---
 
 ## Future Improvements
 
-- [ ] Replace `ci` image tag with Git commit SHA
 - [ ] Implement image promotion between environments
 - [ ] Add development/staging/production environments
 - [ ] Add automated deployment approvals
-- [ ] Add smoke tests after deployment
+- [x] Add SHA-based deployment traceability
+- [ ] Add deployment smoke tests
 - [ ] Add deployment rollback automation
 - [ ] Add dependency scanning
 - [ ] Add infrastructure security scanning
 - [ ] Improve application observability
 - [ ] Add production-style monitoring dashboards
+- [ ] Add cost and teardown documentation
