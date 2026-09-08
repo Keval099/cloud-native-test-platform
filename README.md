@@ -1,117 +1,149 @@
 # Cloud-Native Test Automation & Deployment Platform
 
-A production-style cloud-native application and DevOps learning project built to demonstrate modern application development, containerization, CI/CD, AWS security, container image management, and foundational Kubernetes operations.
+A hands-on cloud and DevOps learning project demonstrating application development, containerization, CI/CD, AWS security, container image management, foundational Kubernetes, Amazon EKS, and automated deployment.
 
-The project is being developed incrementally, with each stage implemented, tested, documented, and integrated into the overall platform.
+The project is intentionally built incrementally so each technology is implemented, tested, troubleshot, and documented before moving to the next stage.
 
 ---
 
 ## Current Technology Stack
 
 ### Application
-
-* Python
-* FastAPI
-* Uvicorn
-* Pytest
-* HTTPX
+- Python
+- FastAPI
+- Uvicorn
+- Pytest
+- HTTPX
 
 ### Containerization
+- Docker
+- Dockerfile
+- Docker Desktop
 
-* Docker
-* Dockerfile
-* Docker Desktop
-
-### CI/CD
-
-* GitHub Actions
-* GitHub Actions OIDC
-* AWS IAM
-* Amazon ECR
-* Trivy
+### CI/CD & Security
+- GitHub Actions
+- GitHub Actions OIDC
+- AWS IAM / STS
+- Amazon ECR
+- Trivy
+- Git commit SHA image tagging
 
 ### AWS
-
-* Amazon ECR
-* AWS IAM
-* AWS STS
-* AWS VPC
-* Internet Gateway
-* Security Groups
-* Application Load Balancer concepts
-* Amazon RDS concepts
+- Amazon VPC
+- Internet Gateway
+- NAT Gateway
+- Security Groups
+- Amazon ECR
+- Amazon EKS
+- EKS Managed Node Group
+- EKS Access Entries
+- IAM least privilege
+- Application Load Balancer / Ingress concepts
+- Amazon RDS concepts
 
 ### Kubernetes
+- Pods
+- Deployments
+- ReplicaSets
+- Services / ClusterIP
+- ConfigMaps
+- Secrets
+- Liveness and readiness probes
+- Rolling updates
+- Rollbacks
+- Blue-Green deployment fundamentals
+- Kubernetes troubleshooting
+- Amazon EKS
 
-* Kubernetes fundamentals
-* Pods
-* Deployments
-* ReplicaSets
-* Services
-* Ingress fundamentals
-* ConfigMaps
-* Secrets
-* Health probes
-* Rolling updates
-* Rollbacks
-* Blue-Green deployments
-* Kubernetes troubleshooting
-
-### Planned Infrastructure & Observability
-
-* Amazon EKS
-* Terraform
-* Amazon RDS
-* AWS Secrets Manager
-* CloudWatch
-* Prometheus
-* Grafana
+### Planned
+- AWS Load Balancer / Ingress integration
+- Amazon RDS PostgreSQL
+- AWS Secrets Manager
+- Terraform
+- CloudWatch
+- Prometheus
+- Grafana
+- Application metrics and alerting
 
 ---
 
-# Project Architecture
+# Current Architecture
 
-The project is being built in stages.
-
-### Current application and CI/CD flow
+The current project has a working end-to-end CI/CD path from a merged GitHub change to a running application on Amazon EKS.
 
 ```text
 Developer
     |
-    | Git push / Pull Request
+    | Pull Request
     v
-GitHub Repository
+GitHub
     |
     v
 GitHub Actions
     |
-    +--> Install dependencies
+    +--> Tests
+    +--> Docker Build
+    +--> Trivy Scan
     |
-    +--> Run Pytest
+    | PR only
+    |------------------------------> STOP
     |
-    +--> Build Docker image
-    |
-    +--> Trivy image security scan
-    |
-    +--> GitHub OIDC
-    |
-    +--> AWS IAM Role
-    |
-    +--> Authenticate to Amazon ECR
-    |
-    +--> Tag Docker image
-    |
-    +--> Push image to Amazon ECR
-    |
+    | Merge to main
     v
-Amazon ECR
+GitHub SHA
+    |
+    +--> Docker image :<SHA>
+    |
+    +--> OIDC
+            |
+            +--> ECR IAM Role
+            |       |
+            |       v
+            |      ECR
+            |
+            +--> EKS IAM Role
+                    |
+                    v
+                 EKS API
+                    |
+                    v
+             kubectl set image
+                    |
+                    v
+             EKS Deployment
+                    |
+              +-----+-----+
+              |           |
+            Pod A       Pod B
+              |           |
+              +-----+-----+
+                    |
+                 Service
+                    |
+                 FastAPI
 ```
+
+### SHA traceability
+
+The same short Git commit SHA is used to identify the build artifact and deployment:
+
+```text
+Git commit
+    |
+    +--> Docker image :47193a1
+    |
+    +--> ECR :47193a1
+    |
+    +--> EKS Deployment :47193a1
+```
+
+This avoids relying on a moving `latest` tag and provides traceability from a running workload back to the source commit.
 
 ---
 
 # Application
 
-The current application is a lightweight FastAPI service used as the foundation for the cloud-native platform.
+The current application is a lightweight FastAPI service.
 
 ## Endpoints
 
@@ -129,9 +161,7 @@ Returns application information and the current environment.
 GET /health
 ```
 
-Returns the application health status.
-
-Example:
+Returns:
 
 ```json
 {
@@ -139,13 +169,13 @@ Example:
 }
 ```
 
-The application currently uses an environment variable for the application environment:
+The application uses:
 
 ```text
 APP_ENV
 ```
 
-If no value is provided, the application defaults to:
+and defaults to:
 
 ```text
 development
@@ -155,59 +185,38 @@ development
 
 # Automated Tests
 
-The application currently has automated API tests using Pytest and FastAPI's test client.
+The project uses Pytest with FastAPI's test client.
 
-Current tests verify:
+Current tests cover:
+- Root endpoint availability and response
+- Health endpoint availability and response
 
-* Root endpoint availability
-* Root endpoint response
-* Health endpoint availability
-* Health endpoint response
-
-Run tests locally with:
+Run locally:
 
 ```bash
 pytest
-```
-
-Current test suite:
-
-```text
-2 tests
-2 passed
 ```
 
 ---
 
 # Docker
 
-The FastAPI application is containerized using Docker.
-
-Current Docker image:
+The application is containerized with the Dockerfile at:
 
 ```text
-cloud-native-test-platform:ci
+docker/labs/Dockerfile
 ```
 
-The container exposes:
-
-```text
-8000
-```
-
-Example local build:
+Build locally:
 
 ```bash
 docker build -f docker/labs/Dockerfile -t cloud-native-test-platform:ci .
 ```
 
-Run locally:
+Run:
 
 ```bash
-docker run -d \
-  --name cloud-native-test-platform-ci \
-  -p 8000:8000 \
-  cloud-native-test-platform:ci
+docker run -d   --name cloud-native-test-platform-ci   -p 8000:8000   cloud-native-test-platform:ci
 ```
 
 Test:
@@ -220,85 +229,89 @@ curl http://localhost:8000/health
 
 # CI/CD Pipeline
 
-GitHub Actions automates the current CI/CD process.
-
-The pipeline currently performs:
+The workflow is:
 
 ```text
-Checkout
-   |
-   v
-Set up Python
-   |
-   v
-Install dependencies
-   |
-   v
-Run Pytest
-   |
-   v
-Build Docker image
-   |
-   v
-Trivy security scan
-   |
-   v
-Authenticate to AWS using GitHub OIDC
-   |
-   v
-Assume AWS IAM Role
-   |
-   v
-Authenticate Docker to ECR
-   |
-   v
-Tag Docker image
-   |
-   v
-Push image to ECR
+Pull Request
+    |
+    +--> Checkout
+    +--> Python setup
+    +--> Install dependencies
+    +--> Pytest
+    +--> Docker build
+    +--> Trivy scan
+    |
+    +--> AWS/ECR steps skipped
+    +--> EKS deployment skipped
+
+
+Merge to main
+    |
+    +--> Checkout
+    +--> Python setup
+    +--> Install dependencies
+    +--> Pytest
+    +--> Docker build
+    +--> Trivy scan
+    |
+    +--> GitHub OIDC
+    +--> ECR IAM role
+    +--> ECR login
+    +--> Push :<SHA>
+    |
+    +--> EKS IAM role
+    +--> Update kubeconfig
+    +--> Deploy :<SHA>
+    +--> Rollout verification
+    +--> Pod verification
 ```
 
-## GitHub Actions
-
-The workflow is located at:
+Workflow:
 
 ```text
 .github/workflows/ci.yaml
 ```
 
-The workflow runs automated tests and builds the Docker image.
+### Image versioning
 
----
-
-# Container Security Scanning
-
-Trivy is used to scan the Docker image for known vulnerabilities.
-
-Example scan findings are surfaced directly in the GitHub Actions workflow.
-
-The current pipeline reports vulnerabilities but does not yet fail the build based on severity.
-
-A future improvement will be to define a vulnerability threshold, for example:
+The workflow creates the image tag from the GitHub commit:
 
 ```text
-HIGH / CRITICAL
+IMAGE_TAG=${GITHUB_SHA::7}
 ```
 
-and fail the pipeline when the threshold is exceeded.
+The same tag is used for:
+- Docker image
+- ECR image
+- EKS deployment
+
+### Deployment
+
+The CD stage updates the existing Kubernetes Deployment with:
+
+```text
+kubectl set image
+```
+
+and then waits for:
+
+```text
+kubectl rollout status
+```
+
+This allows `deployment.yaml` to remain a reusable base manifest rather than being manually changed for every Git commit.
 
 ---
 
-# AWS Authentication
+# GitHub OIDC and IAM
 
-GitHub Actions does not use long-lived AWS access keys for this project.
-
-Instead, the pipeline uses:
+GitHub Actions uses short-lived AWS credentials through OIDC rather than storing long-lived AWS access keys.
 
 ```text
 GitHub Actions
       |
       v
-GitHub OIDC
+GitHub OIDC token
       |
       v
 AWS STS
@@ -307,153 +320,154 @@ AWS STS
 IAM Role
       |
       v
-Temporary AWS credentials
+Temporary credentials
 ```
 
-The IAM role is:
+Two separate roles are used:
 
 ```text
 GitHubActions-ECR-CloudNativeTestPlatform
+    |
+    +--> ECR operations
+
+
+GitHubActions-EKS-CloudNativeTestPlatform
+    |
+    +--> EKS deployment access
 ```
 
-The role trust policy restricts access to the project's GitHub repository and `main` branch.
+The EKS deployment role is connected to the cluster through an EKS Access Entry and is scoped to the `default` namespace with an edit-level EKS access policy.
 
-This demonstrates an important DevSecOps principle:
-
-> Avoid storing long-lived cloud credentials in CI/CD systems when short-lived federated credentials can be used.
+This separation demonstrates:
+- OIDC federation
+- IAM trust policies
+- least privilege
+- separation of artifact publishing and deployment permissions
 
 ---
 
 # Amazon ECR
 
-The Docker image is stored in the following ECR repository:
+Repository:
 
 ```text
 cloud-native-test-platform
 ```
 
-AWS Region:
+Region:
 
 ```text
 ap-south-1
 ```
 
-Current image:
+Images are published using Git commit SHA tags, for example:
 
 ```text
-cloud-native-test-platform:ci
+cloud-native-test-platform:47193a1
 ```
 
-The GitHub Actions pipeline automatically pushes the image to ECR after successful testing, Docker build, and security scanning.
-
----
-
-# IAM Least Privilege
-
-The GitHub Actions IAM role does not have administrator access.
-
-The role is restricted to the ECR operations required by the pipeline.
-
-The architecture separates:
-
-### Trust
-
-Who can assume the role?
-
-```text
-GitHub Actions
-    |
-    v
-OIDC
-    |
-    v
-Specific repository + main branch
-```
-
-### Permissions
-
-What can the role do?
-
-```text
-ECR operations
-    |
-    v
-cloud-native-test-platform repository
-```
-
-This separation demonstrates AWS IAM trust relationships and least-privilege authorization.
+The older `ci` tag may still exist as a development artifact, but the deployment pipeline uses SHA-based tags for traceability.
 
 ---
 
 # AWS Network Architecture
 
-A foundational AWS VPC design has been created with separate subnet tiers.
+The VPC uses separate public, application, and database subnet tiers across two Availability Zones.
 
 ```text
-                    Internet
-                       |
-                       v
-                Internet Gateway
-                       |
-          +------------+------------+
-          |                         |
-      Public Subnet             Public Subnet
-          |                         |
-          +------------+------------+
-                       |
-                 Application
-                  Tier / EKS
-                  Private Subnets
-                       |
-                       v
-                   RDS / DB
-                  Private Subnets
+VPC 10.0.0.0/16
+
+ap-south-1a                    ap-south-1b
+    |                              |
+Public A                       Public B
+    |                              |
+    +--------- Internet Gateway ---+
+                 |
+              NAT Gateway
+                 |
+        +--------+--------+
+        |                 |
+     App A              App B
+        |                 |
+      EKS Node          EKS Node
+        |                 |
+        +--------+--------+
+                 |
+             DB tier
+        DB A / DB B
 ```
 
-The intended architecture separates:
+The application/EKS subnets use the NAT Gateway for outbound internet connectivity.
 
-* Public-facing resources
-* Application resources
-* Database resources
+The database subnets remain private and do not have a direct internet route.
 
-Security groups are designed to restrict communication between tiers.
+> The current public EKS API endpoint is temporarily open to `0.0.0.0/0` for this short-lived learning environment so GitHub-hosted runners can reach the Kubernetes API. This is a lab-only choice and should be restricted or removed before treating the architecture as production.
+
+---
+
+# Amazon EKS
+
+The project now runs the FastAPI application on Amazon EKS using a managed EC2 node group.
+
+Current workload model:
+
+```text
+EKS Cluster
+    |
+    +-- Node A
+    |     |
+    |    Pod
+    |
+    +-- Node B
+          |
+         Pod
+```
+
+The application Deployment runs two replicas with:
+- Readiness probe
+- Liveness probe
+- `APP_ENV=kubernetes`
+- Kubernetes Service on port `8000`
+
+The Service is currently:
+
+```text
+Type: ClusterIP
+Port: 8000
+```
+
+The initial deployment was bootstrapped manually; subsequent image updates are automated through GitHub Actions.
 
 ---
 
 # Kubernetes Learning
 
-The project includes foundational Kubernetes labs.
+The project intentionally focuses on foundational Kubernetes knowledge rather than deep Kubernetes specialization.
 
-The goal is to understand how Kubernetes is used to run and operate containerized applications rather than becoming a Kubernetes specialization project.
-
-Topics completed include:
-
-* Pods
-* Deployments
-* ReplicaSets
-* Services
-* ClusterIP
-* NodePort
-* Ingress fundamentals
-* ConfigMaps
-* Secrets
-* Liveness probes
-* Readiness probes
-* Pod troubleshooting
-* Logs
-* Events
-* `kubectl describe`
-* Rolling updates
-* Rollbacks
-* Blue-Green deployments
+Completed topics include:
+- Pods
+- Nodes
+- Deployments
+- ReplicaSets
+- Services
+- ClusterIP
+- ConfigMaps
+- Secrets
+- Health probes
+- Logs
+- Events
+- `kubectl describe`
+- Rolling updates
+- Rollbacks
+- Blue-Green deployments
+- Basic networking and service discovery
+- EKS deployment
 
 ---
 
 # Kubernetes Troubleshooting
 
-The project includes deliberate failure scenarios to practice troubleshooting.
-
-Basic troubleshooting workflow:
+Basic workflow:
 
 ```text
 kubectl get pods
@@ -469,21 +483,19 @@ kubectl get events
 ```
 
 Failure scenarios practiced include:
-
-* CrashLoopBackOff
-* Application failures
-* Deployment failures
-* Service configuration problems
-* Rollback scenarios
-* Blue-Green traffic switching
+- CrashLoopBackOff
+- Application failures
+- Deployment failures
+- Service configuration problems
+- Rollbacks
+- Blue-Green traffic switching
+- EKS node-join troubleshooting
 
 ---
 
 # Blue-Green Deployment
 
-A foundational Blue-Green deployment has been implemented in Kubernetes.
-
-The concept:
+A foundational Blue-Green deployment was implemented locally.
 
 ```text
              Service
@@ -496,29 +508,9 @@ The concept:
 
 Both versions can run simultaneously.
 
-The Kubernetes Service selector determines which version receives traffic.
+The Service selector determines which version receives traffic.
 
-Example:
-
-```text
-Service
-   |
-   +--> BLUE  = active
-   |
-   +--> GREEN = inactive
-```
-
-After switching the selector:
-
-```text
-Service
-   |
-   +--> GREEN = active
-   |
-   +--> BLUE  = inactive
-```
-
-Rollback can be performed by switching the Service selector back.
+Rollback is performed by switching the selector back to the previous version.
 
 ---
 
@@ -542,16 +534,15 @@ cloud-native-test-platform/
 │
 ├── Kubernetes/
 │   └── labs/
+│       ├── deployment.yaml
+│       └── service.yaml
 │
 ├── tests/
 │   └── test_app.py
 │
 ├── Notes/
-│
 ├── Docs/
-│
 ├── linus-lab/
-│
 ├── .gitignore
 ├── pytest.ini
 └── README.md
@@ -563,53 +554,56 @@ cloud-native-test-platform/
 
 ## Completed
 
-* [x] FastAPI application
-* [x] Root API endpoint
-* [x] Health endpoint
-* [x] Automated Pytest tests
-* [x] Docker containerization
-* [x] Local Docker validation
-* [x] GitHub Actions CI
-* [x] Automated Python tests in CI
-* [x] Docker image build in CI
-* [x] Trivy image security scanning
-* [x] AWS OIDC provider
-* [x] GitHub Actions OIDC authentication
-* [x] IAM role for GitHub Actions
-* [x] IAM least-privilege ECR permissions
-* [x] ECR authentication from GitHub Actions
-* [x] Automated Docker image push to ECR
-* [x] AWS VPC foundational design
-* [x] Kubernetes fundamentals
-* [x] Kubernetes troubleshooting labs
-* [x] Rolling updates
-* [x] Rollbacks
-* [x] Blue-Green deployment fundamentals
+- [x] FastAPI application
+- [x] Root and health endpoints
+- [x] Automated Pytest tests
+- [x] Docker containerization
+- [x] Local Docker validation
+- [x] GitHub Actions CI
+- [x] PR validation workflow
+- [x] Docker image build in CI
+- [x] Trivy image scanning
+- [x] GitHub OIDC
+- [x] ECR IAM role
+- [x] EKS deployment IAM role
+- [x] EKS Access Entry
+- [x] Least-privilege ECR permissions
+- [x] SHA-based image versioning
+- [x] Automated image push to ECR
+- [x] Automated deployment to EKS
+- [x] Automated rollout verification
+- [x] EKS application deployment
+- [x] Kubernetes Service
+- [x] AWS VPC foundational architecture
+- [x] NAT Gateway
+- [x] Kubernetes fundamentals
+- [x] Kubernetes troubleshooting labs
+- [x] Rolling updates
+- [x] Rollbacks
+- [x] Blue-Green deployment fundamentals
 
----
+## Next
 
-# In Progress / Planned
-
-* [ ] Version Docker images using Git commit SHA
-* [ ] Improve Trivy CI failure policy
-* [ ] Create Kubernetes deployment manifests for the application
-* [ ] Deploy application to Amazon EKS
-* [ ] Configure AWS ALB / Kubernetes ingress integration
-* [ ] Configure RDS
-* [ ] Integrate application with PostgreSQL
-* [ ] Implement Terraform
-* [ ] Terraform VPC
-* [ ] Terraform ECR
-* [ ] Terraform IAM
-* [ ] Terraform EKS
-* [ ] Terraform RDS
-* [ ] Configure AWS Secrets Manager
-* [ ] CloudWatch logging and metrics
-* [ ] Prometheus
-* [ ] Grafana
-* [ ] Application metrics
-* [ ] Alerts
-* [ ] Additional failure-recovery scenarios
+- [ ] Improve Trivy CI failure policy
+- [ ] Configure AWS ALB / Kubernetes ingress integration
+- [ ] Create RDS PostgreSQL
+- [ ] Integrate application with PostgreSQL
+- [ ] Configure AWS Secrets Manager
+- [ ] Implement Terraform
+- [ ] Terraform VPC
+- [ ] Terraform IAM
+- [ ] Terraform ECR
+- [ ] Terraform EKS
+- [ ] Terraform RDS
+- [ ] CloudWatch logging and metrics
+- [ ] Prometheus
+- [ ] Grafana
+- [ ] Application metrics
+- [ ] Alerts
+- [ ] Deployment smoke tests
+- [ ] Automated rollback strategy
+- [ ] Additional failure-recovery scenarios
+- [ ] Cost and teardown documentation
 
 ---
 
@@ -617,33 +611,32 @@ cloud-native-test-platform/
 
 This project is designed to demonstrate practical understanding of:
 
-* Linux fundamentals
-* Git and GitHub workflows
-* Python API development
-* Automated API testing
-* Docker
-* Container security
-* GitHub Actions
-* CI/CD
-* AWS IAM
-* OIDC federation
-* AWS STS
-* Amazon ECR
-* AWS networking
-* Kubernetes fundamentals
-* Deployment strategies
-* Troubleshooting
-* Infrastructure as Code
-* Cloud observability
-* DevSecOps practices
+- Linux fundamentals
+- Git and GitHub workflows
+- Python API development
+- Automated API testing
+- Docker
+- Container security
+- GitHub Actions
+- CI/CD
+- AWS IAM
+- OIDC federation
+- AWS STS
+- Amazon ECR
+- Amazon EKS
+- AWS networking
+- Kubernetes fundamentals
+- Deployment strategies
+- Troubleshooting
+- Infrastructure as Code
+- Cloud observability
+- DevSecOps practices
 
-The project intentionally progresses from local development to containerization, CI/CD, AWS container management, Kubernetes, infrastructure automation, and observability.
+The project intentionally progresses from local development to containerization, CI/CD, AWS, Kubernetes/EKS, infrastructure automation, and observability.
 
 ---
 
 # Long-Term Target Architecture
-
-The intended final architecture will evolve toward:
 
 ```text
 Developer
@@ -655,11 +648,8 @@ GitHub
 GitHub Actions
     |
     +--> Tests
-    |
     +--> Docker Build
-    |
-    +--> Security Scan
-    |
+    +--> Trivy
     +--> OIDC / IAM
     |
     v
@@ -672,21 +662,20 @@ Amazon EKS
 AWS Load Balancer
     |
     v
-FastAPI Application
+FastAPI
     |
     v
 Amazon RDS
 ```
 
-Supporting services will include:
+Supporting services:
 
 ```text
 Terraform
-AWS IAM
 AWS Secrets Manager
 CloudWatch
 Prometheus
 Grafana
 ```
 
-The final architecture will be implemented incrementally rather than all at once.
+The architecture will continue to evolve incrementally rather than introducing all components at once.
