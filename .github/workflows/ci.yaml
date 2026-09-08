@@ -15,6 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set image tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,14 +30,14 @@ jobs:
         run: pytest
 
       - name: Build Docker image
-        run: docker build -f docker/labs/Dockerfile -t cloud-native-test-platform:ci .
+        run: docker build -f docker/labs/Dockerfile -t cloud-native-test-platform:${IMAGE_TAG} .
 
       - name: Scan Docker image with Trivy
         run: |
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
             aquasec/trivy:latest \
-            image cloud-native-test-platform:ci
+            image cloud-native-test-platform:${IMAGE_TAG}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
@@ -51,8 +54,8 @@ jobs:
       - name: Tag Docker image
         run: |
           docker tag cloud-native-test-platform:ci \
-            825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:ci
+            825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:${IMAGE_TAG}
 
       - name: Push Docker image to ECR
         run: |
-          docker push 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:ci
+          docker push 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:${IMAGE_TAG}
