@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: cloud-native-test-platform
-          image: cloud-native-test-platform:ci
+          image: 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:38ff62e
 
           ports:
             - containerPort: 8000
