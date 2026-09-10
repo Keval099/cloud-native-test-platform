@@ -96,14 +96,22 @@ jobs:
 
       - name: Wait for deployment rollout
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: rollout
+        continue-on-error: true
         run: |
           kubectl rollout status deployment/cloud-native-test-platform \
             --timeout=180s
 
-      - name: Verify application pods
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Roll back failed deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.rollout.outcome == 'failure'
         run: |
-          kubectl get pods -o wide
+          echo "Deployment rollout failed. Rolling back..."
+          kubectl rollout undo deployment/cloud-native-test-platform
+
+          kubectl rollout status deployment/cloud-native-test-platform \
+            --timeout=180s
+
+          echo "Rollback completed successfully."
 
       - name: Smoke test application
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -119,3 +127,8 @@ jobs:
             http://127.0.0.1:8080/health
 
           echo "Smoke test passed."
+
+      - name: Verify application pods
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          kubectl get pods -o wide
