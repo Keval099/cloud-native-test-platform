@@ -88,10 +88,10 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           kubectl set image deployment/cloud-native-test-platform \
-            cloud-native-test-platform=825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:rollback-test-invalid
+            cloud-native-test-platform=825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:${IMAGE_TAG}
 
           kubectl annotate deployment/cloud-native-test-platform \
-            kubernetes.io/change-cause="Deploy image rollback-test-invalid" \
+            kubernetes.io/change-cause="Deploy image ${IMAGE_TAG}" \
             --overwrite
 
       - name: Wait for deployment rollout
@@ -132,3 +132,9 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           kubectl get pods -o wide
+
+      - name: Mark deployment as failed after rollback
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.rollout.outcome == 'failure'
+        run: |
+          echo "Deployment failed and was rolled back successfully."
+          exit 1
