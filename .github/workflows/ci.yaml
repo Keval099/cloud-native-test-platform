@@ -100,3 +100,18 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           kubectl get pods -o wide
+
+      - name: Smoke test application
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          kubectl port-forward service/cloud-native-test-platform 8080:8000 > port-forward.log 2>&1 &
+          PORT_FORWARD_PID=$!
+
+          trap 'kill $PORT_FORWARD_PID' EXIT
+
+          sleep 5
+
+          curl --fail --silent --show-error \
+            http://127.0.0.1:8080/health
+
+          echo "Smoke test passed."
