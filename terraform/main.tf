@@ -12,12 +12,13 @@ provider "aws" {
   profile = "ecr-lab"
 }
 
-resource "aws_s3_bucket" "terraform_lab" {
-  bucket = var.bucket_name
+module "s3_lab" {
+  source = "./modules/s3-lab"
 
-  tags = {
-    Name        = "cloud-native-test-platform-tf-lab"
-    Environment = "lab"
-    ManagedBy   = "Terraform"
-  }
+  bucket_name = var.bucket_name
+}
+
+moved {
+  from = aws_s3_bucket.terraform_lab
+  to   = module.s3_lab.aws_s3_bucket.terraform_lab
 }
