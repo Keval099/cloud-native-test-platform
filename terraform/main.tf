@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_lab" {
-  bucket = "cloud-native-test-platform-tf-lab-825765413460"
+  bucket = var.bucket_name
 
   tags = {
     Name        = "cloud-native-test-platform-tf-lab"
