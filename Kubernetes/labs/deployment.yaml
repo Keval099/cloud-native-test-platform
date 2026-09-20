@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: cloud-native-test-platform
-
+  labels:
+    app: cloud-native-test-platform
 spec:
   replicas: 2
 
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: cloud-native-test-platform
-          image: 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:38ff62e
+          image: ${IMAGE_URI}
 
           ports:
             - containerPort: 8000
@@ -39,5 +39,5 @@ spec:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 20
