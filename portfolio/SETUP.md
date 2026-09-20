@@ -1,21 +1,32 @@
-# Futuristic GitHub Pages portfolio
+# Futuristic GitHub Pages portfolio update
 
-Replace the existing `portfolio/index.html` with the supplied `index.html`.
+## What changed
+- Removed the light/dark theme control; the page stays in the futuristic dark theme.
+- Changed the header `GH` button to `Github`.
+- Added real technology icons using Devicon CDN assets.
+- Kept screenshot references relative to the Pages site root: `assets/<filename>.png`.
+- Added lazy loading/async decoding to screenshot images.
 
-Keep your existing `portfolio/assets/` folder because the page references:
-- application.png
-- cicd-success.png
-- cloudwatch-alarms.png
-- cloudwatch-dashboard.png
-- cloudwatch-logs.png
-- container-insights.png
-- ecr.png
-- eks-pods.png
-- rollback.png
-- terraform-state.png
-- vpc.png
+## IMPORTANT: screenshots
+The HTML expects the screenshots to physically exist in the repository at:
 
-Before committing, replace every occurrence of `YOUR_LINKEDIN_ID` in `index.html` with your public LinkedIn profile path, for example:
-`https://www.linkedin.com/in/your-name/`
+```text
+portfolio/
+├── index.html
+└── assets/
+    ├── vpc.png
+    ├── ecr.png
+    ├── eks-pods.png
+    ├── cicd-success.png
+    ├── rollback.png
+    ├── cloudwatch-dashboard.png
+    ├── cloudwatch-logs.png
+    ├── container-insights.png
+    ├── cloudwatch-alarms.png
+    └── application.png
+```
 
-The page is framework-free: plain HTML/CSS/JavaScript, responsive, with scroll reveal, active navigation, mobile navigation and a theme control.
+Run `git ls-files portfolio/assets` before pushing. If it returns nothing, the screenshots are not tracked by Git and must be copied into `portfolio/assets/` and added with `git add portfolio/assets`.
+
+## LinkedIn
+Replace every `YOUR_LINKEDIN_ID` in `index.html` with your public LinkedIn profile path.
