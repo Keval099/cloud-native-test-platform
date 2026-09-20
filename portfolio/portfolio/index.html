@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Keval Lad — Cloud, DevOps and AWS portfolio. Cloud-native engineering, AWS, Kubernetes, Terraform, Docker, CI/CD and observability." />
+  <meta name="description"
+    content="Keval Lad — Cloud, DevOps and AWS portfolio. Cloud-native engineering, AWS, Kubernetes, Terraform, Docker, CI/CD and observability." />
   <title>Keval Lad | Cloud • DevOps • AWS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #030812;
@@ -21,29 +25,44 @@
       --blue: #3b82ff;
       --violet: #875cff;
       --green: #27e6a2;
-      --shadow: 0 20px 70px rgba(0,0,0,.35);
+      --shadow: 0 20px 70px rgba(0, 0, 0, .35);
       --radius: 22px;
     }
 
-    * { box-sizing: border-box; scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       color: var(--text);
       background:
-        radial-gradient(circle at 78% 9%, rgba(24,216,255,.12), transparent 24rem),
-        radial-gradient(circle at 10% 30%, rgba(135,92,255,.09), transparent 28rem),
+        radial-gradient(circle at 78% 9%, rgba(24, 216, 255, .12), transparent 24rem),
+        radial-gradient(circle at 10% 30%, rgba(135, 92, 255, .09), transparent 28rem),
         linear-gradient(180deg, #020711 0%, var(--bg) 45%, #02060e 100%);
       font-family: Inter, system-ui, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
     }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1160px, calc(100% - 40px)); margin: auto; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+    }
 
     /* Ambient grid */
     body::before {
       content: "";
-      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
       background-image:
         linear-gradient(rgba(79, 160, 255, .035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(79, 160, 255, .035) 1px, transparent 1px);
@@ -52,173 +71,718 @@
     }
 
     nav {
-      position: sticky; top: 0; z-index: 50;
+      position: sticky;
+      top: 0;
+      z-index: 50;
       backdrop-filter: blur(18px);
       background: rgba(2, 8, 18, .78);
       border-bottom: 1px solid var(--line);
     }
-    .nav-inner { height: 68px; display:flex; align-items:center; justify-content:space-between; gap: 24px; }
-    .brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:-.02em; }
+
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
     .brand-mark {
-      width:38px; height:38px; border-radius:12px;
-      display:grid; place-items:center;
-      color:white; font-family:"JetBrains Mono", monospace;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-family: "JetBrains Mono", monospace;
       background: linear-gradient(135deg, var(--cyan), var(--violet));
-      box-shadow: 0 0 28px rgba(24,216,255,.25);
+      box-shadow: 0 0 28px rgba(24, 216, 255, .25);
     }
-    .brand small { display:block; color:var(--muted); font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
-    .nav-links { display:flex; gap:24px; align-items:center; }
-    .nav-links a { color:#aebed1; font-size:13px; transition:.2s; }
-    .nav-links a:hover, .nav-links a.active { color:white; }
-    .nav-links a.active { text-shadow:0 0 16px rgba(24,216,255,.7); }
-    .nav-actions { display:flex; gap:8px; align-items:center; }
-    .icon-btn, .menu-btn {
-      width:38px; height:38px; border:1px solid var(--line); border-radius:12px;
-      background:rgba(9,23,40,.7); color:#d8e8fa; display:grid; place-items:center;
-      cursor:pointer;
-    }
-    .menu-btn { display:none; }
 
-    .hero { min-height: 700px; display:grid; grid-template-columns:1.03fr .97fr; align-items:center; gap:38px; padding:80px 0 72px; }
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #aebed1;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+    }
+
+    .nav-links a.active {
+      text-shadow: 0 0 16px rgba(24, 216, 255, .7);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-btn,
+    .menu-btn {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(9, 23, 40, .7);
+      color: #d8e8fa;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .menu-btn {
+      display: none;
+    }
+
+    .hero {
+      min-height: 700px;
+      display: grid;
+      grid-template-columns: 1.03fr .97fr;
+      align-items: center;
+      gap: 38px;
+      padding: 80px 0 72px;
+    }
+
     .eyebrow {
-      display:inline-flex; gap:9px; align-items:center; padding:8px 13px; border-radius:999px;
-      color:#7feaff; background:rgba(24,216,255,.08); border:1px solid rgba(24,216,255,.25);
-      font:600 11px "JetBrains Mono", monospace; letter-spacing:.06em; text-transform:uppercase;
-      box-shadow:0 0 30px rgba(24,216,255,.08);
+      display: inline-flex;
+      gap: 9px;
+      align-items: center;
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: #7feaff;
+      background: rgba(24, 216, 255, .08);
+      border: 1px solid rgba(24, 216, 255, .25);
+      font: 600 11px "JetBrains Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      box-shadow: 0 0 30px rgba(24, 216, 255, .08);
     }
-    .dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 14px var(--green); }
-    h1 { font-size:clamp(44px,6vw,76px); line-height:1.02; letter-spacing:-.055em; margin:24px 0 22px; }
-    .gradient-text { background:linear-gradient(90deg, #18d8ff, #6d74ff 60%, #a678ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .hero-copy { color:#afc0d3; font-size:17px; max-width:620px; }
-    .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin:28px 0; }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+      margin: 24px 0 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #18d8ff, #6d74ff 60%, #a678ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      color: #afc0d3;
+      font-size: 17px;
+      max-width: 620px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px 0;
+    }
+
     .btn {
-      display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:12px 18px;
-      border-radius:12px; border:1px solid rgba(115,185,255,.45); font-weight:700; font-size:13px;
-      transition:transform .2s, box-shadow .2s, border-color .2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(115, 185, 255, .45);
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
     }
-    .btn:hover { transform:translateY(-2px); border-color:var(--cyan); box-shadow:0 10px 35px rgba(24,216,255,.12); }
-    .btn.primary { border:0; background:linear-gradient(100deg,#10bff0,#5961ff); box-shadow:0 12px 35px rgba(42,130,255,.24); }
-    .btn.ghost { background:rgba(7,18,32,.65); }
-    .stats { display:flex; gap:30px; margin-top:34px; flex-wrap:wrap; }
-    .stat strong { display:block; font-size:22px; }
-    .stat span { color:var(--muted); font-size:11px; }
 
-    .hero-art { position:relative; min-height:500px; display:grid; place-items:center; }
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
+      box-shadow: 0 10px 35px rgba(24, 216, 255, .12);
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(100deg, #10bff0, #5961ff);
+      box-shadow: 0 12px 35px rgba(42, 130, 255, .24);
+    }
+
+    .btn.ghost {
+      background: rgba(7, 18, 32, .65);
+    }
+
+    .stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 34px;
+      flex-wrap: wrap;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .hero-art {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+    }
+
     .orb {
-      position:absolute; width:320px; height:320px; border-radius:50%;
-      background:radial-gradient(circle at 35% 30%, rgba(24,216,255,.22), rgba(59,130,255,.08) 42%, transparent 68%);
-      filter:blur(3px); animation:float 7s ease-in-out infinite;
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(24, 216, 255, .22), rgba(59, 130, 255, .08) 42%, transparent 68%);
+      filter: blur(3px);
+      animation: float 7s ease-in-out infinite;
     }
+
     .cloud-core {
-      width:210px; height:150px; border:1px solid rgba(24,216,255,.65); border-radius:45% 45% 28% 28%;
-      background:linear-gradient(145deg, rgba(15,56,91,.9), rgba(7,19,36,.9));
-      box-shadow:0 0 40px rgba(24,216,255,.2), inset 0 0 40px rgba(24,216,255,.06);
-      display:grid; place-items:center; position:relative; z-index:2;
+      width: 210px;
+      height: 150px;
+      border: 1px solid rgba(24, 216, 255, .65);
+      border-radius: 45% 45% 28% 28%;
+      background: linear-gradient(145deg, rgba(15, 56, 91, .9), rgba(7, 19, 36, .9));
+      box-shadow: 0 0 40px rgba(24, 216, 255, .2), inset 0 0 40px rgba(24, 216, 255, .06);
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 2;
     }
-    .cloud-core::before { content:"AWS"; font-size:42px; font-weight:800; letter-spacing:-.08em; }
-    .cloud-core::after { content:""; position:absolute; bottom:25px; width:70px; height:3px; background:#ffad3d; border-radius:99px; transform:rotate(-3deg); }
-    .orbit { position:absolute; border:1px solid rgba(76,164,255,.22); border-radius:50%; transform:rotate(-18deg); }
-    .o1 { width:440px; height:250px; }
-    .o2 { width:500px; height:300px; transform:rotate(35deg); }
+
+    .cloud-core::before {
+      content: "AWS";
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -.08em;
+    }
+
+    .cloud-core::after {
+      content: "";
+      position: absolute;
+      bottom: 25px;
+      width: 70px;
+      height: 3px;
+      background: #ffad3d;
+      border-radius: 99px;
+      transform: rotate(-3deg);
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(76, 164, 255, .22);
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+
+    .o1 {
+      width: 440px;
+      height: 250px;
+    }
+
+    .o2 {
+      width: 500px;
+      height: 300px;
+      transform: rotate(35deg);
+    }
+
     .tech-node {
-      position:absolute; width:62px; height:62px; display:grid; place-items:center; border-radius:16px;
-      background:rgba(7,20,36,.92); border:1px solid rgba(81,167,255,.35); color:#7eeaff;
-      box-shadow:0 15px 35px rgba(0,0,0,.3);
-      font:600 11px "JetBrains Mono", monospace;
+      position: absolute;
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(7, 20, 36, .92);
+      border: 1px solid rgba(81, 167, 255, .35);
+      color: #7eeaff;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, .3);
+      font: 600 11px "JetBrains Mono", monospace;
     }
-    .n1{top:17%;left:7%}.n2{top:12%;right:10%}.n3{bottom:16%;left:11%}.n4{bottom:10%;right:12%}.n5{top:46%;right:0}
-    @keyframes float { 50% { transform:translateY(-14px) scale(1.03); } }
 
-    section { padding:88px 0; position:relative; }
-    .section-head { margin-bottom:30px; }
-    .kicker { color:#5de7ff; font:600 11px "JetBrains Mono", monospace; text-transform:uppercase; letter-spacing:.1em; }
-    h2 { margin:8px 0; font-size:34px; letter-spacing:-.035em; }
-    .section-head p { color:var(--muted); max-width:700px; margin:0; }
+    .n1 {
+      top: 17%;
+      left: 7%
+    }
 
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .grid-2 { display:grid; grid-template-columns:1.25fr .75fr; gap:18px; }
+    .n2 {
+      top: 12%;
+      right: 10%
+    }
+
+    .n3 {
+      bottom: 16%;
+      left: 11%
+    }
+
+    .n4 {
+      bottom: 10%;
+      right: 12%
+    }
+
+    .n5 {
+      top: 46%;
+      right: 0
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-14px) scale(1.03);
+      }
+    }
+
+    section {
+      padding: 88px 0;
+      position: relative;
+    }
+
+    .section-head {
+      margin-bottom: 30px;
+    }
+
+    .kicker {
+      color: #5de7ff;
+      font: 600 11px "JetBrains Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    h2 {
+      margin: 8px 0;
+      font-size: 34px;
+      letter-spacing: -.035em;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+    }
+
     .card {
-      background:linear-gradient(145deg, rgba(12,29,49,.78), rgba(5,14,25,.78));
-      border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow);
-      backdrop-filter:blur(12px); transition:transform .25s, border-color .25s;
+      background: linear-gradient(145deg, rgba(12, 29, 49, .78), rgba(5, 14, 25, .78));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      transition: transform .25s, border-color .25s;
     }
-    .card:hover { transform:translateY(-4px); border-color:rgba(24,216,255,.38); }
-    .card h3 { margin:0 0 8px; font-size:18px; }
-    .card p { margin:0; color:var(--muted); font-size:14px; }
-    .about-copy { font-size:15px; color:#b7c6d7; }
-    .quote { margin-top:20px; padding:17px 18px; border-left:2px solid var(--cyan); background:rgba(24,216,255,.045); border-radius:0 14px 14px 0; color:#cfe3f7; font-style:italic; }
-    .facts { display:grid; gap:15px; }
-    .fact { display:grid; grid-template-columns:32px 1fr; gap:10px; align-items:start; }
-    .fact b { display:block; font-size:12px; color:#dbeaff; }
-    .fact span { color:var(--muted); font-size:12px; }
 
-    .cert { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px; border:1px solid rgba(111,176,245,.12); border-radius:15px; background:rgba(3,12,22,.4); }
-    .cert + .cert { margin-top:10px; }
-    .badge { width:45px; height:45px; border-radius:13px; display:grid; place-items:center; background:linear-gradient(145deg,#0b2b48,#0b1728); border:1px solid rgba(92,175,255,.25); font-size:11px; font-weight:800; }
-    .cert-title { flex:1; font-size:12px; font-weight:700; }
-    .done { color:#39e6aa; font:600 10px "JetBrains Mono", monospace; padding:5px 8px; border:1px solid rgba(39,230,162,.25); border-radius:999px; }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24, 216, 255, .38);
+    }
 
-    .project { overflow:hidden; }
-    .project-top { display:grid; grid-template-columns:.9fr 1.1fr; gap:20px; align-items:stretch; }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .about-copy {
+      font-size: 15px;
+      color: #b7c6d7;
+    }
+
+    .quote {
+      margin-top: 20px;
+      padding: 17px 18px;
+      border-left: 2px solid var(--cyan);
+      background: rgba(24, 216, 255, .045);
+      border-radius: 0 14px 14px 0;
+      color: #cfe3f7;
+      font-style: italic;
+    }
+
+    .facts {
+      display: grid;
+      gap: 15px;
+    }
+
+    .fact {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .fact b {
+      display: block;
+      font-size: 12px;
+      color: #dbeaff;
+    }
+
+    .fact span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cert {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px;
+      border: 1px solid rgba(111, 176, 245, .12);
+      border-radius: 15px;
+      background: rgba(3, 12, 22, .4);
+    }
+
+    .cert+.cert {
+      margin-top: 10px;
+    }
+
+    .badge {
+      width: 45px;
+      height: 45px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #0b2b48, #0b1728);
+      border: 1px solid rgba(92, 175, 255, .25);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .cert-title {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .done {
+      color: #39e6aa;
+      font: 600 10px "JetBrains Mono", monospace;
+      padding: 5px 8px;
+      border: 1px solid rgba(39, 230, 162, .25);
+      border-radius: 999px;
+    }
+
+    .project {
+      overflow: hidden;
+    }
+
+    .project-top {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
     .terminal {
-      min-height:270px; border-radius:18px; border:1px solid rgba(91,178,255,.2); background:#020810;
-      padding:18px; font:12px/1.8 "JetBrains Mono", monospace; color:#8bdfff; overflow:hidden;
+      min-height: 270px;
+      border-radius: 18px;
+      border: 1px solid rgba(91, 178, 255, .2);
+      background: #020810;
+      padding: 18px;
+      font: 12px/1.8 "JetBrains Mono", monospace;
+      color: #8bdfff;
+      overflow: hidden;
     }
-    .terminal .bar { color:#667c91; margin-bottom:15px; }
-    .terminal .green { color:#47e4a7; }
-    .terminal .purple { color:#a995ff; }
-    .checks { display:grid; gap:11px; margin:20px 0; }
-    .check { color:#c6d8ea; font-size:13px; }
-    .check::before { content:"✓"; color:var(--green); margin-right:9px; font-weight:800; }
-    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
-    .tag { font:600 10px "JetBrains Mono", monospace; padding:6px 9px; border-radius:999px; color:#8fdfff; border:1px solid rgba(81,175,255,.2); background:rgba(17,54,83,.3); }
 
-    .arch { min-height:270px; display:grid; place-items:center; }
-    .flow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
-    .flow-box { padding:12px 14px; border-radius:14px; border:1px solid rgba(91,178,255,.25); background:#07182a; text-align:center; font-size:11px; }
-    .flow-box b { display:block; font-size:18px; color:#5ce7ff; margin-bottom:2px; }
-    .arrow { color:#5d8bb4; }
+    .terminal .bar {
+      color: #667c91;
+      margin-bottom: 15px;
+    }
 
-    .stack { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
-    .stack-item { padding:18px 10px; text-align:center; border:1px solid var(--line); border-radius:16px; background:rgba(8,22,38,.6); }
-    .stack-item strong { display:block; font-size:13px; margin-top:7px; }
-    .stack-item span { color:var(--muted); font-size:10px; }
+    .terminal .green {
+      color: #47e4a7;
+    }
 
-    .screens { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .screen { border:1px solid var(--line); border-radius:17px; overflow:hidden; background:#06111e; }
-    .screen img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
-    .screen figcaption { padding:11px 13px; color:#9db0c7; font-size:11px; }
+    .terminal .purple {
+      color: #a995ff;
+    }
 
-    .contact { text-align:center; padding:65px 24px; }
-    .contact p { max-width:650px; margin:10px auto 24px; color:var(--muted); }
-    footer { border-top:1px solid var(--line); padding:26px 0 40px; color:#71859a; font-size:11px; }
-    .footer-row { display:flex; justify-content:space-between; gap:20px; }
+    .checks {
+      display: grid;
+      gap: 11px;
+      margin: 20px 0;
+    }
 
-    .reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity:1; transform:none; }
+    .check {
+      color: #c6d8ea;
+      font-size: 13px;
+    }
+
+    .check::before {
+      content: "✓";
+      color: var(--green);
+      margin-right: 9px;
+      font-weight: 800;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      font: 600 10px "JetBrains Mono", monospace;
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: #8fdfff;
+      border: 1px solid rgba(81, 175, 255, .2);
+      background: rgba(17, 54, 83, .3);
+    }
+
+    .arch {
+      min-height: 270px;
+      display: grid;
+      place-items: center;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-box {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(91, 178, 255, .25);
+      background: #07182a;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .flow-box b {
+      display: block;
+      font-size: 18px;
+      color: #5ce7ff;
+      margin-bottom: 2px;
+    }
+
+    .arrow {
+      color: #5d8bb4;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .stack-item {
+      padding: 18px 10px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(8, 22, 38, .6);
+    }
+
+    .stack-item strong {
+      display: block;
+      font-size: 13px;
+      margin-top: 7px;
+    }
+
+    .stack-item span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .screen {
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      overflow: hidden;
+      background: #06111e;
+    }
+
+    .screen img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .screen figcaption {
+      padding: 11px 13px;
+      color: #9db0c7;
+      font-size: 11px;
+    }
+
+    .contact {
+      text-align: center;
+      padding: 65px 24px;
+    }
+
+    .contact p {
+      max-width: 650px;
+      margin: 10px auto 24px;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 26px 0 40px;
+      color: #71859a;
+      font-size: 11px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
 
     @media (max-width: 900px) {
-      .nav-links { display:none; }
-      .menu-btn { display:grid; }
-      .hero { grid-template-columns:1fr; padding-top:55px; }
-      .hero-art { min-height:390px; }
-      .grid-2, .project-top { grid-template-columns:1fr; }
-      .grid-3 { grid-template-columns:1fr; }
-      .stack { grid-template-columns:repeat(3,1fr); }
-      .screens { grid-template-columns:1fr 1fr; }
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: grid;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 55px;
+      }
+
+      .hero-art {
+        min-height: 390px;
+      }
+
+      .grid-2,
+      .project-top {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .stack {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .screens {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
     @media (max-width: 560px) {
-      .container { width:min(100% - 24px, 1160px); }
-      h1 { font-size:43px; }
-      section { padding:62px 0; }
-      .stats { gap:18px; }
-      .stack { grid-template-columns:repeat(2,1fr); }
-      .screens { grid-template-columns:1fr; }
-      .hero-art { transform:scale(.82); margin:-35px 0; }
-      .footer-row { flex-direction:column; }
+      .container {
+        width: min(100% - 24px, 1160px);
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      section {
+        padding: 62px 0;
+      }
+
+      .stats {
+        gap: 18px;
+      }
+
+      .stack {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .screens {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        transform: scale(.82);
+        margin: -35px 0;
+      }
+
+      .footer-row {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
   <nav>
     <div class="container nav-inner">
@@ -237,9 +801,11 @@
       </div>
       <div class="nav-actions">
         <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☾</button>
-        <a class="icon-btn" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+        <a class="icon-btn" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank"
+          rel="noreferrer" aria-label="GitHub">GH</a>
         <!-- Replace YOUR_LINKEDIN_ID with your real LinkedIn public profile path -->
-        <a class="icon-btn" href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID/" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer"
+          aria-label="LinkedIn">in</a>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
       </div>
     </div>
@@ -249,8 +815,10 @@
     <section class="container hero" id="home">
       <div class="reveal">
         <span class="eyebrow"><span class="dot"></span> BUILD • DEPLOY • SCALE</span>
-        <h1>Building <span class="gradient-text">Cloud-Native</span><br>Solutions for a<br><span class="gradient-text">Smarter Tomorrow</span></h1>
-        <p class="hero-copy">Cloud and DevOps enthusiast with hands-on experience building, deploying and observing real-world solutions on AWS using Kubernetes, Terraform, Docker and automated CI/CD.</p>
+        <h1>Building <span class="gradient-text">Cloud-Native</span><br>Solutions for a<br><span
+            class="gradient-text">Smarter Tomorrow</span></h1>
+        <p class="hero-copy">Cloud and DevOps enthusiast with hands-on experience building, deploying and observing
+          real-world solutions on AWS using Kubernetes, Terraform, Docker and automated CI/CD.</p>
         <div class="cta-row">
           <a class="btn primary" href="#project">⚡ View My Project</a>
           <a class="btn ghost" href="#contact">↳ Let's Connect</a>
@@ -263,10 +831,15 @@
       </div>
 
       <div class="hero-art reveal">
-        <div class="orb"></div><div class="orbit o1"></div><div class="orbit o2"></div>
+        <div class="orb"></div>
+        <div class="orbit o1"></div>
+        <div class="orbit o2"></div>
         <div class="cloud-core"></div>
-        <div class="tech-node n1">K8s</div><div class="tech-node n2">AWS</div>
-        <div class="tech-node n3">TF</div><div class="tech-node n4">CI/CD</div><div class="tech-node n5">OBS</div>
+        <div class="tech-node n1">K8s</div>
+        <div class="tech-node n2">AWS</div>
+        <div class="tech-node n3">TF</div>
+        <div class="tech-node n4">CI/CD</div>
+        <div class="tech-node n5">OBS</div>
       </div>
     </section>
 
@@ -279,22 +852,39 @@
         </div>
         <div class="grid-2">
           <div class="card reveal">
-            <p class="about-copy">Hi, I'm <strong>Keval Lad</strong>. I'm focused on cloud and DevOps engineering, with a practical approach to learning by building. I enjoy working with AWS, Linux, Docker, Kubernetes, Terraform and CI/CD to turn infrastructure and application requirements into repeatable cloud-native workflows.</p>
-            <p class="about-copy">My current portfolio project demonstrates the full path from application code and containerization through AWS infrastructure, EKS deployment, GitHub Actions automation, security controls, rollback and CloudWatch observability.</p>
+            <p class="about-copy">Hi, I'm <strong>Keval Lad</strong>. I'm focused on cloud and DevOps engineering, with
+              a practical approach to learning by building. I enjoy working with AWS, Linux, Docker, Kubernetes,
+              Terraform and CI/CD to turn infrastructure and application requirements into repeatable cloud-native
+              workflows.</p>
+            <p class="about-copy">My current portfolio project demonstrates the full path from application code and
+              containerization through AWS infrastructure, EKS deployment, GitHub Actions automation, security controls,
+              rollback and CloudWatch observability.</p>
             <div class="cta-row">
-              <a class="btn primary" href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID/" target="_blank" rel="noreferrer">in LinkedIn</a>
+              <a class="btn primary" href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID/" target="_blank"
+                rel="noreferrer">in LinkedIn</a>
               <a class="btn ghost" href="https://github.com/Keval099" target="_blank" rel="noreferrer">GH GitHub</a>
             </div>
-            <div class="quote">“Build, learn, improve, repeat. Cloud is not just technology; it's an opportunity to create impact.”</div>
+            <div class="quote">“Build, learn, improve, repeat. Cloud is not just technology; it's an opportunity to
+              create impact.”</div>
           </div>
           <div class="card reveal">
             <h3>Quick Facts</h3>
             <div class="facts">
-              <div class="fact"><span>⌁</span><div><b>Focus</b><span>Cloud • DevOps • Automation</span></div></div>
-              <div class="fact"><span>◇</span><div><b>Core Platform</b><span>AWS</span></div></div>
-              <div class="fact"><span>⌘</span><div><b>Engineering</b><span>Python • Bash • YAML • Infrastructure as Code</span></div></div>
-              <div class="fact"><span>◈</span><div><b>Current Project</b><span>Cloud Native Test Platform</span></div></div>
-              <div class="fact"><span>↗</span><div><b>Approach</b><span>Hands-on, automated and evidence-driven</span></div></div>
+              <div class="fact"><span>⌁</span>
+                <div><b>Focus</b><span>Cloud • DevOps • Automation</span></div>
+              </div>
+              <div class="fact"><span>◇</span>
+                <div><b>Core Platform</b><span>AWS</span></div>
+              </div>
+              <div class="fact"><span>⌘</span>
+                <div><b>Engineering</b><span>Python • Bash • YAML • Infrastructure as Code</span></div>
+              </div>
+              <div class="fact"><span>◈</span>
+                <div><b>Current Project</b><span>Cloud Native Test Platform</span></div>
+              </div>
+              <div class="fact"><span>↗</span>
+                <div><b>Approach</b><span>Hands-on, automated and evidence-driven</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -309,13 +899,23 @@
         </div>
         <div class="grid-3">
           <div class="card cert-wrap reveal">
-            <div class="cert"><div class="badge">SAA</div><div class="cert-title">AWS Certified Solutions Architect – Associate</div><span class="done">COMPLETED</span></div>
+            <div class="cert">
+              <div class="badge">SAA</div>
+              <div class="cert-title">AWS Certified Solutions Architect – Associate</div><span
+                class="done">COMPLETED</span>
+            </div>
           </div>
           <div class="card cert-wrap reveal">
-            <div class="cert"><div class="badge">AI</div><div class="cert-title">AWS Certified AI Practitioner</div><span class="done">COMPLETED</span></div>
+            <div class="cert">
+              <div class="badge">AI</div>
+              <div class="cert-title">AWS Certified AI Practitioner</div><span class="done">COMPLETED</span>
+            </div>
           </div>
           <div class="card cert-wrap reveal">
-            <div class="cert"><div class="badge">CCP</div><div class="cert-title">AWS Certified Cloud Practitioner</div><span class="done">COMPLETED</span></div>
+            <div class="cert">
+              <div class="badge">CCP</div>
+              <div class="cert-title">AWS Certified Cloud Practitioner</div><span class="done">COMPLETED</span>
+            </div>
           </div>
         </div>
       </div>
@@ -326,7 +926,8 @@
         <div class="section-head reveal">
           <span class="kicker">03 / Featured Project</span>
           <h2>Cloud Native Test Platform</h2>
-          <p>An end-to-end cloud-native platform demonstrating application delivery, infrastructure automation, deployment safety and observability.</p>
+          <p>An end-to-end cloud-native platform demonstrating application delivery, infrastructure automation,
+            deployment safety and observability.</p>
         </div>
         <div class="card project reveal">
           <div class="project-top">
@@ -355,9 +956,12 @@
                 <div class="check">CloudWatch Container Insights and application logs</div>
                 <div class="check">Terraform-managed AWS infrastructure</div>
               </div>
-              <a class="btn primary" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank" rel="noreferrer">View Source on GitHub ↗</a>
+              <a class="btn primary" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank"
+                rel="noreferrer">View Source on GitHub ↗</a>
               <div class="tags">
-                <span class="tag">AWS</span><span class="tag">EKS</span><span class="tag">ECR</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span><span class="tag">CloudWatch</span>
+                <span class="tag">AWS</span><span class="tag">EKS</span><span class="tag">ECR</span><span
+                  class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">GitHub
+                  Actions</span><span class="tag">CloudWatch</span>
               </div>
             </div>
           </div>
@@ -373,10 +977,14 @@
         </div>
         <div class="card arch reveal">
           <div class="flow">
-            <div class="flow-box"><b>⌘</b>Developer<br>GitHub</div><div class="arrow">→</div>
-            <div class="flow-box"><b>⚙</b>GitHub Actions<br>CI/CD</div><div class="arrow">→</div>
-            <div class="flow-box"><b>▣</b>Amazon ECR<br>Image</div><div class="arrow">→</div>
-            <div class="flow-box"><b>⬡</b>Amazon EKS<br>Workloads</div><div class="arrow">→</div>
+            <div class="flow-box"><b>⌘</b>Developer<br>GitHub</div>
+            <div class="arrow">→</div>
+            <div class="flow-box"><b>⚙</b>GitHub Actions<br>CI/CD</div>
+            <div class="arrow">→</div>
+            <div class="flow-box"><b>▣</b>Amazon ECR<br>Image</div>
+            <div class="arrow">→</div>
+            <div class="flow-box"><b>⬡</b>Amazon EKS<br>Workloads</div>
+            <div class="arrow">→</div>
             <div class="flow-box"><b>◉</b>CloudWatch<br>Observe</div>
           </div>
         </div>
@@ -414,15 +1022,33 @@
           <p>Selected screenshots showing the infrastructure, delivery pipeline and observability implementation.</p>
         </div>
         <div class="screens reveal">
-          <figure class="screen"><img src="assets/vpc.png" alt="AWS VPC architecture evidence"><figcaption>VPC & networking</figcaption></figure>
-          <figure class="screen"><img src="assets/ecr.png" alt="Amazon ECR evidence"><figcaption>Amazon ECR</figcaption></figure>
-          <figure class="screen"><img src="assets/eks-pods.png" alt="Amazon EKS pods evidence"><figcaption>EKS workloads</figcaption></figure>
-          <figure class="screen"><img src="assets/cicd-success.png" alt="CI/CD success evidence"><figcaption>CI/CD end-to-end success</figcaption></figure>
-          <figure class="screen"><img src="assets/rollback.png" alt="Deployment rollback evidence"><figcaption>Automatic rollback validation</figcaption></figure>
-          <figure class="screen"><img src="assets/cloudwatch-dashboard.png" alt="CloudWatch dashboard evidence"><figcaption>CloudWatch observability</figcaption></figure>
-          <figure class="screen"><img src="assets/cloudwatch-logs.png" alt="CloudWatch application logs"><figcaption>Application logs</figcaption></figure>
-          <figure class="screen"><img src="assets/container-insights.png" alt="Container Insights metrics"><figcaption>Container Insights metrics</figcaption></figure>
-          <figure class="screen"><img src="assets/cloudwatch-alarms.png" alt="CloudWatch alarms"><figcaption>CloudWatch alarms</figcaption></figure>
+          <figure class="screen"><img src="assets/vpc.png" alt="AWS VPC architecture evidence">
+            <figcaption>VPC & networking</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/ecr.png" alt="Amazon ECR evidence">
+            <figcaption>Amazon ECR</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/eks-pods.png" alt="Amazon EKS pods evidence">
+            <figcaption>EKS workloads</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/cicd-success.png" alt="CI/CD success evidence">
+            <figcaption>CI/CD end-to-end success</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/rollback.png" alt="Deployment rollback evidence">
+            <figcaption>Automatic rollback validation</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/cloudwatch-dashboard.png" alt="CloudWatch dashboard evidence">
+            <figcaption>CloudWatch observability</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/cloudwatch-logs.png" alt="CloudWatch application logs">
+            <figcaption>Application logs</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/container-insights.png" alt="Container Insights metrics">
+            <figcaption>Container Insights metrics</figcaption>
+          </figure>
+          <figure class="screen"><img src="assets/cloudwatch-alarms.png" alt="CloudWatch alarms">
+            <figcaption>CloudWatch alarms</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -432,10 +1058,13 @@
         <div class="card contact reveal">
           <span class="kicker">07 / Contact</span>
           <h2>Let's build something cloud-native.</h2>
-          <p>Interested in cloud engineering, DevOps, automation or infrastructure? Connect with me through LinkedIn or explore the project on GitHub.</p>
+          <p>Interested in cloud engineering, DevOps, automation or infrastructure? Connect with me through LinkedIn or
+            explore the project on GitHub.</p>
           <div class="cta-row" style="justify-content:center">
-            <a class="btn primary" href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID/" target="_blank" rel="noreferrer">in LinkedIn</a>
-            <a class="btn ghost" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank" rel="noreferrer">GH Project Repository</a>
+            <a class="btn primary" href="https://www.linkedin.com/in/YOUR_LINKEDIN_ID/" target="_blank"
+              rel="noreferrer">in LinkedIn</a>
+            <a class="btn ghost" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank"
+              rel="noreferrer">GH Project Repository</a>
           </div>
         </div>
       </div>
@@ -463,7 +1092,7 @@
       sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
       links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
     };
-    window.addEventListener('scroll', setActive, { passive:true });
+    window.addEventListener('scroll', setActive, { passive: true });
     setActive();
 
     document.getElementById('themeBtn').addEventListener('click', () => {
@@ -487,4 +1116,5 @@
     });
   </script>
 </body>
+
 </html>
