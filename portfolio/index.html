@@ -156,6 +156,28 @@
       cursor: pointer;
     }
 
+    .github-btn {
+      min-width: 82px;
+      height: 38px;
+      padding: 0 13px;
+      border: 1px solid rgba(111, 176, 245, .28);
+      border-radius: 12px;
+      background: rgba(9, 23, 40, .7);
+      color: #d8e8fa;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      transition: .2s;
+    }
+
+    .github-btn:hover {
+      border-color: var(--cyan);
+      color: white;
+      box-shadow: 0 0 24px rgba(24, 216, 255, .12);
+    }
+
     .menu-btn {
       display: none;
     }
@@ -638,6 +660,15 @@
       background: rgba(8, 22, 38, .6);
     }
 
+    .stack-item img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 9px rgba(24, 216, 255, .10));
+    }
+
     .stack-item strong {
       display: block;
       font-size: 13px;
@@ -800,9 +831,8 @@
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-actions">
-        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☾</button>
-        <a class="icon-btn" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank"
-          rel="noreferrer" aria-label="GitHub">GH</a>
+        <a class="github-btn" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank"
+          rel="noreferrer" aria-label="GitHub">Github</a>
         <!-- Replace YOUR_LINKEDIN_ID with your real LinkedIn public profile path -->
         <a class="icon-btn" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer"
           aria-label="LinkedIn">in</a>
@@ -998,18 +1028,42 @@
           <h2>Tools behind the project</h2>
         </div>
         <div class="stack reveal">
-          <div class="stack-item">☁️<strong>AWS</strong><span>Cloud</span></div>
-          <div class="stack-item">⬡<strong>Kubernetes</strong><span>EKS</span></div>
-          <div class="stack-item">◈<strong>Terraform</strong><span>IaC</span></div>
-          <div class="stack-item">◫<strong>Docker</strong><span>Containers</span></div>
-          <div class="stack-item">🐍<strong>Python</strong><span>FastAPI</span></div>
-          <div class="stack-item">⚡<strong>GitHub Actions</strong><span>CI/CD</span></div>
-          <div class="stack-item">◉<strong>CloudWatch</strong><span>Observability</span></div>
-          <div class="stack-item">⌁<strong>Linux</strong><span>WSL</span></div>
-          <div class="stack-item">🔐<strong>IAM / OIDC</strong><span>Security</span></div>
-          <div class="stack-item">▤<strong>ECR</strong><span>Registry</span></div>
-          <div class="stack-item">▦<strong>VPC</strong><span>Networking</span></div>
-          <div class="stack-item">✓<strong>Trivy</strong><span>Scanning</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+              alt="AWS"><strong>AWS</strong><span>Cloud</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"
+              alt="Kubernetes"><strong>Kubernetes</strong><span>EKS</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"
+              alt="Terraform"><strong>Terraform</strong><span>IaC</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+              alt="Docker"><strong>Docker</strong><span>Containers</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+              alt="Python"><strong>Python</strong><span>FastAPI</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg"
+              alt="GitHub Actions"><strong>GitHub Actions</strong><span>CI/CD</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg"
+              alt="CloudWatch"><strong>CloudWatch</strong><span>Observability</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+              alt="Linux"><strong>Linux</strong><span>WSL</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+              alt="Bash"><strong>Bash</strong><span>Automation</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg"
+              alt="Amazon ECR"><strong>ECR</strong><span>Registry</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+              alt="VPC"><strong>VPC</strong><span>Networking</span></div>
+          <div class="stack-item"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/trivy/trivy-original.svg"
+              alt="Trivy"><strong>Trivy</strong><span>Scanning</span></div>
         </div>
       </div>
     </section>
@@ -1022,31 +1076,39 @@
           <p>Selected screenshots showing the infrastructure, delivery pipeline and observability implementation.</p>
         </div>
         <div class="screens reveal">
-          <figure class="screen"><img src="assets/vpc.png" alt="AWS VPC architecture evidence">
+          <figure class="screen"><img src="assets/vpc.png" alt="AWS VPC architecture evidence" loading="lazy"
+              decoding="async">
             <figcaption>VPC & networking</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/ecr.png" alt="Amazon ECR evidence">
+          <figure class="screen"><img src="assets/ecr.png" alt="Amazon ECR evidence" loading="lazy" decoding="async">
             <figcaption>Amazon ECR</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/eks-pods.png" alt="Amazon EKS pods evidence">
+          <figure class="screen"><img src="assets/eks-pods.png" alt="Amazon EKS pods evidence" loading="lazy"
+              decoding="async">
             <figcaption>EKS workloads</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/cicd-success.png" alt="CI/CD success evidence">
+          <figure class="screen"><img src="assets/cicd-success.png" alt="CI/CD success evidence" loading="lazy"
+              decoding="async">
             <figcaption>CI/CD end-to-end success</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/rollback.png" alt="Deployment rollback evidence">
+          <figure class="screen"><img src="assets/rollback.png" alt="Deployment rollback evidence" loading="lazy"
+              decoding="async">
             <figcaption>Automatic rollback validation</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/cloudwatch-dashboard.png" alt="CloudWatch dashboard evidence">
+          <figure class="screen"><img src="assets/cloudwatch-dashboard.png" alt="CloudWatch dashboard evidence"
+              loading="lazy" decoding="async">
             <figcaption>CloudWatch observability</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/cloudwatch-logs.png" alt="CloudWatch application logs">
+          <figure class="screen"><img src="assets/cloudwatch-logs.png" alt="CloudWatch application logs" loading="lazy"
+              decoding="async">
             <figcaption>Application logs</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/container-insights.png" alt="Container Insights metrics">
+          <figure class="screen"><img src="assets/container-insights.png" alt="Container Insights metrics"
+              loading="lazy" decoding="async">
             <figcaption>Container Insights metrics</figcaption>
           </figure>
-          <figure class="screen"><img src="assets/cloudwatch-alarms.png" alt="CloudWatch alarms">
+          <figure class="screen"><img src="assets/cloudwatch-alarms.png" alt="CloudWatch alarms" loading="lazy"
+              decoding="async">
             <figcaption>CloudWatch alarms</figcaption>
           </figure>
         </div>
@@ -1094,13 +1156,6 @@
     };
     window.addEventListener('scroll', setActive, { passive: true });
     setActive();
-
-    document.getElementById('themeBtn').addEventListener('click', () => {
-      document.body.classList.toggle('soft');
-      const soft = document.body.classList.contains('soft');
-      document.getElementById('themeBtn').textContent = soft ? '☀' : '☾';
-      document.body.style.filter = soft ? 'brightness(1.08)' : '';
-    });
 
     document.getElementById('menuBtn').addEventListener('click', () => {
       const nav = document.querySelector('.nav-links');
