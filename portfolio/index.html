@@ -526,6 +526,88 @@
     .story-meter { position:absolute; right:0; top:50%; transform:translateY(-50%); width:3px; height:150px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
     .story-meter-fill { width:100%; height:25%; background:linear-gradient(180deg,var(--cyan),var(--violet)); box-shadow:0 0 18px rgba(24,216,255,.7); transition:transform .25s ease; transform-origin:top; }
 
+
+
+    /* Integrated CI/CD pipeline animation */
+    .pipeline-widget {
+      position: relative;
+      margin-top: 26px;
+      padding: 42px 38px 28px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(11,19,34,.92), rgba(8,14,26,.78));
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.025);
+    }
+    .pipeline-widget::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size:28px 28px;
+      mask-image:linear-gradient(to bottom, #000, transparent 95%);
+      pointer-events:none;
+    }
+    .pipeline-widget-head {
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      margin-bottom:30px;
+    }
+    .pipeline-widget-kicker {
+      color:var(--cyan);
+      font:700 11px/1.2 'JetBrains Mono',monospace;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .pipeline-widget-title {
+      margin:8px 0 0;
+      font-size:clamp(20px,3vw,30px);
+      letter-spacing:-.03em;
+    }
+    .pipeline-live {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 11px;
+      border:1px solid rgba(66,216,150,.18);
+      border-radius:999px;
+      color:#8fe8bd;
+      background:rgba(66,216,150,.06);
+      font:700 10px 'JetBrains Mono',monospace;
+      letter-spacing:.08em;
+      white-space:nowrap;
+    }
+    .pipeline-live-dot {
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#42d896;
+      box-shadow:0 0 10px rgba(66,216,150,.6);
+      animation:pipelineBlink 1.6s ease-in-out infinite;
+    }
+    .pipeline { position:relative; display:flex; justify-content:space-between; align-items:flex-start; padding:0 4px; }
+    .pipeline .track { position:absolute; top:24px; left:28px; right:28px; height:2px; background:#2a3342; border-radius:2px; overflow:visible; }
+    .pipeline .track-fill { position:absolute; top:0; left:0; height:100%; width:0%; background:linear-gradient(90deg,#42d896,#f5b355); border-radius:2px; }
+    .pipeline .dot { position:absolute; top:50%; left:0%; width:10px; height:10px; margin-top:-5px; margin-left:-5px; border-radius:50%; background:#6fe3ff; box-shadow:0 0 10px 3px rgba(111,227,255,.6); }
+    .pipeline .stage { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; width:84px; text-align:center; }
+    .pipeline .icon { width:48px; height:48px; border-radius:50%; background:#10141c; border:2px solid #2a3342; display:flex; align-items:center; justify-content:center; color:#5b6577; transition:border-color .35s ease,color .35s ease,box-shadow .35s ease; }
+    .pipeline .icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .pipeline .label { margin-top:12px; font:500 12.5px/1.2 'JetBrains Mono',monospace; color:#7d8aa0; letter-spacing:.01em; transition:color .35s ease; }
+    .pipeline .stage.is-active .icon { border-color:#f5b355; color:#f5b355; box-shadow:0 0 0 5px rgba(245,179,85,.45); }
+    .pipeline .stage.is-active .label { color:#eef2f8; }
+    .pipeline .stage.is-done .icon { border-color:#42d896; color:#42d896; }
+    .pipeline .stage.is-done .label { color:#7d8aa0; }
+    .pipeline-status { position:relative; margin-top:34px; padding-top:18px; border-top:1px solid rgba(255,255,255,.06); display:flex; align-items:center; gap:10px; font:500 13px/1.4 'JetBrains Mono',monospace; color:#7d8aa0; }
+    .pipeline-status-dot { width:7px; height:7px; border-radius:50%; background:#f5b355; box-shadow:0 0 8px 2px rgba(245,179,85,.45); flex-shrink:0; animation:pipelineBlink 1.6s ease-in-out infinite; }
+    #pipeline-status-text { color:#eef2f8; }
+    @keyframes pipelineBlink { 0%,100%{opacity:1} 50%{opacity:.35} }
+    @media (max-width:700px) { .pipeline-widget { padding:30px 16px 22px; } .pipeline .stage { width:56px; } .pipeline .icon { width:38px;height:38px; } .pipeline .icon svg { width:18px;height:18px; } .pipeline .label { font-size:10.5px; } .pipeline .track { left:19px; right:19px; top:19px; } .pipeline-status { font-size:11px; } }
+    @media (prefers-reduced-motion: reduce) { .pipeline-status-dot { animation:none; } }
+
     .reveal { opacity:0; transform:translateY(34px) scale(.985); transition:opacity .75s ease, transform .75s cubic-bezier(.2,.8,.2,1); }
     .reveal.visible { opacity:1; transform:none; }
     .card, .stack-item, .stat { transition:transform .45s cubic-bezier(.2,.8,.2,1), border-color .45s ease, box-shadow .45s ease; }
@@ -759,13 +841,31 @@
           <span class="kicker">04 / Architecture</span>
           <h2>Infrastructure as a delivery system</h2>
         </div>
-        <div class="card arch reveal">
-          <div class="flow">
-            <div class="flow-box"><b>⌘</b>Developer<br>GitHub</div><div class="arrow">→</div>
-            <div class="flow-box"><b>⚙</b>GitHub Actions<br>CI/CD</div><div class="arrow">→</div>
-            <div class="flow-box"><b>▣</b>Amazon ECR<br>Image</div><div class="arrow">→</div>
-            <div class="flow-box"><b>⬡</b>Amazon EKS<br>Workloads</div><div class="arrow">→</div>
-            <div class="flow-box"><b>◉</b>CloudWatch<br>Observe</div>
+        <div class="pipeline-widget reveal" aria-label="Animated CI/CD delivery pipeline">
+          <div class="pipeline-widget-head">
+            <div>
+              <div class="pipeline-widget-kicker">LIVE SYSTEM FLOW</div>
+              <h3 class="pipeline-widget-title">From commit to <span class="gradient-text">observability.</span></h3>
+            </div>
+            <div class="pipeline-live"><span class="pipeline-live-dot"></span> PIPELINE ACTIVE</div>
+          </div>
+
+          <div class="pipeline" id="pipeline">
+            <div class="track">
+              <div class="track-fill" id="track-fill"></div>
+              <div class="dot" id="dot"></div>
+            </div>
+
+            <div class="stage" data-stage="0"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><line x1="2" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="22" y2="12"/></svg></div><div class="label">Commit</div></div>
+            <div class="stage" data-stage="1"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 L21 8 V16 L12 21 L3 16 V8 Z"/><path d="M3 8 L12 13 L21 8"/><line x1="12" y1="13" x2="12" y2="21"/></svg></div><div class="label">Build</div></div>
+            <div class="stage" data-stage="2"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 L20 5 V11 C20 16 16.5 20 12 22 C7.5 20 4 16 4 11 V5 Z"/><path d="M8 12 L11 15 L16 9"/></svg></div><div class="label">Test</div></div>
+            <div class="stage" data-stage="3"><div class="icon"><svg viewBox="0 0 24 24"><path d="M7 18 H17 A4 4 0 0 0 17 10 A5 5 0 0 0 7.5 8.5 A3.5 3.5 0 0 0 7 18 Z"/><line x1="12" y1="15" x2="12" y2="5"/><path d="M9 8 L12 5 L15 8"/></svg></div><div class="label">Deploy</div></div>
+            <div class="stage" data-stage="4"><div class="icon"><svg viewBox="0 0 24 24"><polyline points="2,12 6,12 8,5 11,19 13,3 16,12 22,12"/></svg></div><div class="label">Monitor</div></div>
+          </div>
+
+          <div class="pipeline-status">
+            <div class="pipeline-status-dot"></div>
+            <div id="pipeline-status-text">Commit pushed to main</div>
           </div>
         </div>
       </div>
@@ -1076,6 +1176,56 @@
       nav.style.flexDirection = 'column';
       nav.style.borderBottom = '1px solid var(--line)';
     });
-  </script>
+  
+
+  // Architecture section: exact pipeline animation supplied by the project owner.
+  (function () {
+    var stages = Array.prototype.slice.call(document.querySelectorAll('.pipeline .stage'));
+    var trackFill = document.getElementById('track-fill');
+    var dot = document.getElementById('dot');
+    var statusText = document.getElementById('pipeline-status-text');
+
+    var messages = [
+      'Commit pushed to main',
+      'Building container image',
+      'Running test suite',
+      'Deploying to production',
+      'Monitoring live traffic'
+    ];
+
+    var DUR = 7000;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setStage(idx) {
+      stages.forEach(function(el) {
+        var s = parseInt(el.getAttribute('data-stage'), 10);
+        el.classList.remove('is-active', 'is-done');
+        if (s < idx) el.classList.add('is-done');
+        else if (s === idx) el.classList.add('is-active');
+      });
+      statusText.textContent = messages[idx];
+    }
+
+    if (reduced) {
+      trackFill.style.width = '100%';
+      dot.style.left = '100%';
+      setStage(4);
+    } else {
+      var start = null;
+      var lastIdx = -1;
+      function frame(ts) {
+        if (start === null) start = ts;
+        var elapsed = (ts - start) % DUR;
+        var progress = elapsed / DUR;
+        trackFill.style.width = (progress * 100) + '%';
+        dot.style.left = (progress * 100) + '%';
+        var idx = Math.min(4, Math.floor(progress * 5));
+        if (idx !== lastIdx) { setStage(idx); lastIdx = idx; }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+  })();
+</script>
 </body>
 </html>
