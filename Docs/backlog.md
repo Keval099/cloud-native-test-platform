@@ -1,270 +1,250 @@
 # Project Backlog
 
-## Application
+## Cloud Native Test Platform
 
-- [x] Create FastAPI application
-- [x] Create application health endpoint
-- [x] Implement basic application environment configuration
-- [ ] Create PostgreSQL database
-- [ ] Implement Employee API
-- [ ] Implement Leave API
-- [ ] Add request validation
-- [x] Add automated API tests
-- [ ] Add integration tests
-- [ ] Add application-level error handling
+Project status: **COMPLETED**
+
+The project has reached its planned implementation scope.
+
+The platform demonstrates an end-to-end cloud-native delivery workflow:
+
+> Develop → Test → Containerize → Scan → Push → Provision → Deploy → Observe → Validate → Roll Back
 
 ---
 
-## Containerization
+# 1. Application
+
+- [x] Build FastAPI application
+- [x] Implement `/` endpoint
+- [x] Implement `/health` endpoint
+- [x] Support environment configuration through `APP_ENV`
+- [x] Add automated application tests
+- [x] Verify application locally
+
+---
+
+# 2. Docker
 
 - [x] Create Dockerfile
-- [x] Build Docker image
-- [x] Run application locally in Docker
-- [x] Validate container health endpoint
-- [ ] Move production Dockerfile to final project location
-- [ ] Create Docker Compose setup
-- [ ] Add container health checks
-- [ ] Improve Docker image security
-- [x] Troubleshoot container failures
-- [x] Document container troubleshooting
+- [x] Build application image locally
+- [x] Run application inside Docker
+- [x] Verify `/health` endpoint from container
+- [x] Verify application root endpoint from container
+- [x] Use lightweight Python base image
 
 ---
 
-## CI/CD
+# 3. CI/CD
 
-- [x] Create GitHub Actions CI
-- [x] Checkout repository in GitHub Actions
-- [x] Set up Python in CI
-- [x] Install Python dependencies in CI
+- [x] Create GitHub Actions workflow
 - [x] Run Python tests in CI
 - [x] Build Docker image in CI
+- [x] Generate image tags from Git commit SHA
 - [x] Scan Docker image with Trivy
-- [x] Configure GitHub OIDC
-- [x] Create AWS IAM role for GitHub Actions
-- [x] Configure IAM trust policy for GitHub repository
-- [x] Configure least-privilege ECR permissions
-- [x] Authenticate GitHub Actions with AWS using OIDC
-- [x] Authenticate Docker with Amazon ECR
-- [x] Tag Docker image for ECR
-- [x] Push Docker image to ECR
-- [x] Use Git commit SHA for Docker image tags
-- [x] Add versioned image tagging strategy
-- [ ] Configure Trivy to fail CI on HIGH/CRITICAL vulnerabilities
-- [x] Deploy application to EKS
-- [ ] Run deployment smoke tests
-- [ ] Add deployment rollback strategy
+- [x] Configure GitHub Actions OIDC authentication
+- [x] Push container image to Amazon ECR
+- [x] Authenticate GitHub Actions to EKS
+- [x] Update EKS deployment image automatically
+- [x] Wait for Kubernetes rollout
+- [x] Run application smoke test
+- [x] Verify application pods after deployment
+- [x] Implement automatic deployment rollback
+- [x] Test rollback using an intentionally failed deployment
+- [x] Verify successful recovery after rollback
 
 ---
 
-## AWS
+# 4. AWS Networking
 
-### IAM
-
-- [x] Create GitHub OIDC identity provider
-- [x] Create GitHub Actions ECR IAM role
-- [x] Configure IAM trust relationship
-- [x] Restrict ECR trust to repository and main branch
-- [x] Configure least-privilege ECR permissions
-- [x] Create separate GitHub Actions EKS deployment role
-- [x] Add EKS access entry for deployment role
-- [x] Scope EKS deployment access to the default namespace
-- [ ] Review IAM policies for further least-privilege improvements
-
-### ECR
-
-- [x] Create ECR repository
-- [x] Build Docker image locally
-- [x] Push Docker image manually to ECR
-- [x] Push Docker image automatically from GitHub Actions
-- [ ] Enable ECR scan-on-push
-- [ ] Define image retention/lifecycle policy
-- [x] Implement SHA-based image versioning
-
-### Networking
-
-- [x] Design AWS VPC
-- [x] Create public subnets
-- [x] Create private application subnets
-- [x] Create private database subnets
+- [x] Create/manage project VPC
+- [x] Configure public subnets
+- [x] Configure application/private subnets
+- [x] Configure database subnets
 - [x] Configure Internet Gateway
 - [x] Configure route tables
-- [x] Configure subnet associations
-- [ ] Design security group communication between tiers
+- [x] Configure subnet route table associations
 - [x] Configure NAT Gateway
-- [ ] Perform final network security review
+- [x] Configure Elastic IP for NAT
+- [x] Configure VPC DNS hostnames
+- [x] Configure application security group
+- [x] Configure ALB security group
+- [x] Configure RDS security group
+- [x] Apply least-privilege network access between tiers
 
-### Compute / Platform
+---
 
-- [x] Create EKS cluster
-- [x] Configure EKS managed worker nodes
+# 5. Amazon ECR
+
+- [x] Create ECR repository
+- [x] Enable image scanning on push
+- [x] Push application image to ECR
+- [x] Use immutable-style commit SHA image identification in CI/CD
+- [x] Verify ECR images
+- [x] Integrate ECR with EKS deployment
+
+---
+
+# 6. Amazon EKS
+
+- [x] Provision EKS cluster
+- [x] Configure EKS cluster networking
+- [x] Create managed node group
+- [x] Configure worker node IAM role
+- [x] Configure ECR image pull permissions
+- [x] Configure EKS access
+- [x] Configure GitHub Actions EKS access
 - [x] Deploy application to EKS
-- [x] Configure Kubernetes networking
-- [ ] Configure ALB integration
-
-### Database
-
-- [ ] Create RDS PostgreSQL
-- [ ] Configure RDS security group
-- [ ] Connect application to PostgreSQL
-- [ ] Configure database credentials securely
-- [ ] Test application-to-database connectivity
-
-### Secrets
-
-- [ ] Create AWS Secrets Manager secret
-- [ ] Integrate application with Secrets Manager
-- [ ] Remove database secrets from configuration
-- [ ] Configure Kubernetes secret integration
-
-### Observability
-
-- [ ] Configure CloudWatch logs
-- [ ] Configure CloudWatch metrics
-- [ ] Configure application logging
-- [ ] Configure application metrics
+- [x] Run multiple application replicas
+- [x] Verify pods across EKS nodes
+- [x] Configure Kubernetes readiness probe
+- [x] Configure Kubernetes liveness probe
+- [x] Configure Kubernetes Service
+- [x] Verify rolling deployment
+- [x] Verify application health on EKS
 
 ---
 
-## Infrastructure as Code
+# 7. Kubernetes
 
-- [ ] Learn Terraform basics
-- [ ] Create Terraform project structure
-- [ ] Terraform VPC
-- [ ] Terraform networking
-- [ ] Terraform ECR
-- [ ] Terraform IAM
-- [ ] Terraform EKS
-- [ ] Terraform RDS
-- [ ] Terraform security groups
-- [ ] Terraform variables
-- [ ] Terraform outputs
-- [ ] Terraform remote state
-- [ ] Document Terraform workflow
+- [x] Understand Kubernetes Deployment
+- [x] Understand Kubernetes ReplicaSets
+- [x] Understand Pods
+- [x] Understand Services
+- [x] Understand readiness probes
+- [x] Understand liveness probes
+- [x] Understand rolling updates
+- [x] Understand rollout status
+- [x] Understand rollback
+- [x] Deploy application using Kubernetes manifests
+- [x] Verify application using kubectl
 
----
-
-## Kubernetes Fundamentals
-
-- [x] Learn Pods
-- [x] Learn Nodes
-- [x] Learn Deployments
-- [x] Learn ReplicaSets
-- [x] Learn Services
-- [x] Learn ClusterIP
-- [x] Learn NodePort
-- [x] Learn Ingress fundamentals
-- [x] Learn ConfigMaps
-- [x] Learn Secrets
-- [x] Add health probes
-- [ ] Configure resource limits
-- [ ] Configure HPA
-- [x] Practice Kubernetes troubleshooting
-- [x] Troubleshoot CrashLoopBackOff
-- [x] Inspect Kubernetes logs
-- [x] Inspect Kubernetes events
-- [x] Use kubectl describe
-- [x] Practice rolling updates
-- [x] Practice deployment rollback
-- [x] Practice Blue-Green deployment
-- [x] Deploy the actual application to Kubernetes
-- [x] Deploy the application to EKS
+> Kubernetes was intentionally kept at a foundational operational level.
+> The project does not aim to demonstrate advanced Kubernetes specialization.
 
 ---
 
-## Deployment Strategies
+# 8. Infrastructure as Code
 
-- [x] Understand rolling deployment
-- [x] Practice rolling update
-- [x] Practice rollback
-- [x] Understand Blue-Green deployment
-- [x] Implement foundational Blue-Green deployment
-- [ ] Integrate Blue-Green deployment with CI/CD
-- [ ] Implement automated deployment validation
-- [ ] Implement automated rollback
-
----
-
-## Observability
-
-- [ ] CloudWatch logs
-- [ ] CloudWatch metrics
-- [ ] Application logging
-- [ ] Application metrics
-- [ ] Prometheus
-- [ ] Grafana
-- [ ] Create dashboards
-- [ ] Configure alerts
-- [ ] Monitor application health
-- [ ] Monitor infrastructure health
+- [x] Install and configure Terraform
+- [x] Configure AWS provider
+- [x] Configure Terraform state
+- [x] Practice Terraform initialization
+- [x] Practice Terraform plan
+- [x] Practice Terraform apply
+- [x] Practice Terraform validation and formatting
+- [x] Practice configuration drift detection
+- [x] Practice resource import
+- [x] Import existing VPC resources
+- [x] Import existing subnet resources
+- [x] Import route tables and associations
+- [x] Import security groups
+- [x] Manage NAT Gateway with Terraform
+- [x] Manage ECR with Terraform
+- [x] Manage EKS with Terraform
+- [x] Manage IAM with Terraform
+- [x] Manage EKS access entries with Terraform
+- [x] Manage EKS Pod Identity with Terraform
+- [x] Manage CloudWatch observability add-ons with Terraform
+- [x] Verify Terraform plan has no unexpected changes
 
 ---
 
-## Security
+# 9. IAM and Security
 
-- [x] IAM least privilege
-- [x] GitHub OIDC authentication
-- [x] Container image scanning
-- [ ] Dependency vulnerability scanning
-- [ ] Secrets management
-- [ ] ECR scan-on-push
-- [ ] Network security review
-- [ ] Kubernetes security review
-- [x] IAM role separation for ECR and EKS
-- [x] Security checks in CI/CD
-
----
-
-## Troubleshooting
-
-- [x] Troubleshoot Docker build failures
-- [x] Troubleshoot Docker networking
-- [x] Troubleshoot Kubernetes application failures
-- [x] Create CrashLoopBackOff
-- [x] Troubleshoot CrashLoopBackOff
-- [x] Create ImagePullBackOff
-- [ ] Troubleshoot ImagePullBackOff
-- [x] Break Kubernetes Service configuration
-- [x] Troubleshoot deployment problems
-- [x] Practice Kubernetes rollback
-- [ ] Troubleshoot database connectivity
-- [x] Troubleshoot ECR authentication
-- [x] Troubleshoot GitHub OIDC authentication
-- [x] Troubleshoot EKS deployment/node-join failure
-- [x] Document common troubleshooting workflows
+- [x] Create dedicated EKS cluster IAM role
+- [x] Create dedicated EKS node IAM role
+- [x] Configure required AWS managed policies
+- [x] Create GitHub Actions ECR role
+- [x] Create GitHub Actions EKS role
+- [x] Configure GitHub Actions OIDC trust
+- [x] Avoid long-lived AWS credentials in GitHub Actions
+- [x] Configure EKS access entry for GitHub Actions
+- [x] Scope GitHub Actions Kubernetes access to the application namespace
+- [x] Configure EKS Pod Identity for CloudWatch
+- [x] Apply security-group-based network access controls
 
 ---
 
-## Documentation
+# 10. Observability
 
-- [x] Create project README
-- [x] Document application architecture
-- [x] Document Docker workflow
+- [x] Install Amazon CloudWatch Observability EKS add-on
+- [x] Configure EKS Pod Identity Agent
+- [x] Configure CloudWatch IAM role
+- [x] Configure CloudWatch Pod Identity association
+- [x] Collect application logs
+- [x] Collect Kubernetes/container logs
+- [x] Verify CloudWatch log streams
+- [x] Verify application `/health` logs
+- [x] Collect Container Insights metrics
+- [x] Monitor node CPU utilization
+- [x] Monitor pod CPU utilization
+- [x] Monitor pod memory utilization
+- [x] Monitor failed nodes
+- [x] Create CloudWatch dashboard
+- [x] Create CloudWatch alarms
+- [x] Verify alarm state
+
+---
+
+# 11. Validation and Recovery
+
+- [x] Validate local application
+- [x] Validate Docker container
+- [x] Validate ECR image
+- [x] Validate EKS deployment
+- [x] Validate Kubernetes pods
+- [x] Validate application health endpoint
+- [x] Validate application root endpoint
+- [x] Validate GitHub Actions pipeline
+- [x] Validate deployment rollout
+- [x] Validate smoke test
+- [x] Intentionally introduce failed deployment
+- [x] Detect failed rollout
+- [x] Automatically roll back deployment
+- [x] Validate application recovery
+
+---
+
+# 12. Documentation
+
+- [x] Document architecture
+- [x] Document infrastructure
 - [x] Document CI/CD workflow
-- [x] Document GitHub OIDC authentication
-- [x] Document IAM role and trust relationship
-- [x] Document ECR integration
-- [x] Document Kubernetes fundamentals
-- [x] Document Blue-Green deployment
-- [x] Document AWS architecture
-- [x] Document EKS architecture
-- [ ] Document Terraform architecture
-- [ ] Document observability architecture
-- [ ] Add architecture diagrams
-- [ ] Add deployment runbook
-- [x] Add troubleshooting notes
+- [x] Document Kubernetes deployment
+- [x] Document Terraform implementation
+- [x] Document IAM/OIDC configuration
+- [x] Document observability
+- [x] Capture implementation evidence
+- [x] Capture CI/CD evidence
+- [x] Capture rollback evidence
+- [x] Capture AWS infrastructure evidence
 
 ---
 
-## Future Improvements
+# Final Status
 
-- [ ] Implement image promotion between environments
-- [ ] Add development/staging/production environments
-- [ ] Add automated deployment approvals
-- [x] Add SHA-based deployment traceability
-- [ ] Add deployment smoke tests
-- [ ] Add deployment rollback automation
-- [ ] Add dependency scanning
-- [ ] Add infrastructure security scanning
-- [ ] Improve application observability
-- [ ] Add production-style monitoring dashboards
-- [ ] Add cost and teardown documentation
+## Project complete
+
+The planned implementation scope has been completed.
+
+The project demonstrates:
+
+- Application development
+- Automated testing
+- Docker containerization
+- Container security scanning
+- Amazon ECR
+- Amazon EKS
+- Kubernetes fundamentals
+- Terraform infrastructure as code
+- AWS IAM
+- GitHub Actions
+- GitHub OIDC
+- Automated deployment
+- Automated rollback
+- CloudWatch observability
+- CloudWatch metrics and alarms
+- Application logging
+- Operational validation
+
+Advanced Kubernetes specialization, Prometheus/Grafana, ALB/Ingress-based external application exposure, and additional production platform features are outside the final scope of this project.
