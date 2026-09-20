@@ -462,13 +462,13 @@
     }
     .story-video {
       position: absolute; inset: 0; width:100%; height:100%; object-fit:cover;
-      opacity: .22; filter: saturate(.9) contrast(1.15) brightness(.55);
+      opacity: .10; filter: saturate(.65) contrast(1.2) brightness(.45);
       transform: scale(1.08); z-index:-3;
     }
     .story-video-overlay {
       position:absolute; inset:0; z-index:-2;
-      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(2,7,17,.35) 38%, rgba(2,7,17,.92) 100%),
-                  linear-gradient(90deg, rgba(2,7,17,.7), transparent 50%, rgba(2,7,17,.7));
+      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(2,7,17,.45) 38%, rgba(2,7,17,.96) 100%),
+                  linear-gradient(90deg, rgba(2,7,17,.84), rgba(2,7,17,.25) 50%, rgba(2,7,17,.84));
     }
     .story-grid {
       position:absolute; inset:-10%; z-index:-1; opacity:.28;
@@ -477,6 +477,26 @@
       transform-origin:center bottom;
       mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
     }
+    .story-grid::before {
+      content:""; position:absolute; inset:0; opacity:.55;
+      background:repeating-linear-gradient(90deg, transparent 0 120px, rgba(24,216,255,.05) 121px 122px),
+                 repeating-linear-gradient(0deg, transparent 0 90px, rgba(135,92,255,.04) 91px 92px);
+      animation:gridDrift 18s linear infinite;
+    }
+    .control-lines { position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.8; }
+    .control-lines span { position:absolute; height:1px; transform-origin:left center; background:linear-gradient(90deg, transparent, rgba(24,216,255,.5), transparent); filter:drop-shadow(0 0 8px rgba(24,216,255,.6)); animation:lineSweep 4s ease-in-out infinite; }
+    .control-lines span:nth-child(1){width:42%;left:7%;top:28%;transform:rotate(7deg)}
+    .control-lines span:nth-child(2){width:36%;left:53%;top:31%;transform:rotate(-13deg);animation-delay:.8s}
+    .control-lines span:nth-child(3){width:44%;left:10%;top:68%;transform:rotate(-9deg);animation-delay:1.5s}
+    .control-lines span:nth-child(4){width:32%;left:58%;top:70%;transform:rotate(12deg);animation-delay:2.2s}
+    .data-packet { position:absolute; width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 16px var(--cyan),0 0 32px rgba(24,216,255,.5); animation:packetFlow 5s linear infinite; }
+    .data-packet.p1{left:8%;top:28%;--tx:42vw;--ty:3vh}.data-packet.p2{left:87%;top:31%;--tx:-34vw;--ty:-7vh;animation-delay:1s}.data-packet.p3{left:12%;top:68%;--tx:40vw;--ty:-8vh;animation-delay:2s}.data-packet.p4{left:88%;top:70%;--tx:-29vw;--ty:7vh;animation-delay:3s}
+    .delivery-track { position:absolute; left:50%; bottom:7%; transform:translateX(-50%); width:min(760px,70%); height:42px; border:1px solid rgba(105,180,255,.14); border-radius:999px; background:rgba(3,12,24,.62); backdrop-filter:blur(14px); display:flex; align-items:center; justify-content:space-around; padding:0 12px; z-index:2; box-shadow:0 15px 60px rgba(0,0,0,.25); }
+    .track-segment { position:relative; flex:1; height:2px; background:rgba(255,255,255,.08); overflow:visible; }
+    .track-segment::after { content:""; position:absolute; top:50%; left:-4px; width:8px; height:8px; transform:translateY(-50%); border-radius:50%; background:rgba(157,176,199,.5); box-shadow:0 0 10px rgba(157,176,199,.25); }
+    .track-segment::before { content:""; position:absolute; top:50%; left:-10%; width:22%; height:2px; transform:translateY(-50%); background:linear-gradient(90deg,transparent,var(--cyan)); box-shadow:0 0 12px var(--cyan); animation:trackPulse 2.8s linear infinite; }
+    .track-segment:nth-child(2)::before{animation-delay:.7s}.track-segment:nth-child(3)::before{animation-delay:1.4s}.track-segment:nth-child(4)::before{animation-delay:2.1s}
+    .track-label { font:700 9px 'JetBrains Mono',monospace; letter-spacing:.12em; color:rgba(238,247,255,.6); margin:0 10px; white-space:nowrap; }
     .story-inner { width:min(1200px, calc(100% - 40px)); height:100%; position:relative; }
     .story-copy { position:absolute; left:0; top:50%; width:min(390px, 40%); transform:translateY(-50%); z-index:3; }
     .story-copy .kicker { display:inline-block; margin-bottom:14px; }
@@ -513,6 +533,10 @@
     @keyframes scrollHint { 0%,100%{opacity:.35; transform:translate(-50%,0)} 50%{opacity:1; transform:translate(-50%,7px)} }
     @keyframes spin { to { transform:rotate(360deg); } }
     @keyframes spinReverse { to { transform:rotate(-360deg); } }
+    @keyframes gridDrift { from { transform:translate3d(0,0,0) } to { transform:translate3d(70px,45px,0) } }
+    @keyframes lineSweep { 0%,100% { opacity:.12; transform:translateX(-3%) scaleX(.75) rotate(var(--r,0deg)); } 50% { opacity:.85; transform:translateX(5%) scaleX(1.05) rotate(var(--r,0deg)); } }
+    @keyframes packetFlow { 0% { opacity:0; transform:translate3d(0,0,0) scale(.5); } 12% { opacity:1; } 80% { opacity:1; } 100% { opacity:0; transform:translate3d(var(--tx),var(--ty),0) scale(1.25); } }
+    @keyframes trackPulse { 0% { left:-10%; opacity:0; } 15% { opacity:1; } 80% { opacity:1; } 100% { left:95%; opacity:0; } }
 
     @media (max-width: 900px) {
       .cinematic-story { height: 260vh; }
@@ -560,7 +584,7 @@
         <a href="#project">Project</a>
         <a href="#architecture">Architecture</a>
         <a href="#stack">Tech Stack</a>
-        <a href="#screenshots">Screenshots</a>
+        <a href="#screenshots">Evidence</a>
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-actions">
@@ -598,16 +622,18 @@
 
     <section class="cinematic-story" id="story" aria-label="Project delivery story">
       <div class="story-stage">
-        <video class="story-video" autoplay muted loop playsinline preload="metadata" poster="https://thumbs.wbm.im/pw/medium/ba4cefad70222a499168be049b800d55.jpg" aria-hidden="true">
-          <source src="https://player.vimeo.com/progressive_redirect/playback/791513553/rendition/240p/file.mp4?loc=external&amp;oauth2_token_id=1223210874&amp;signature=a3695ddd02afb9c1392fee99c98535a77a97e10b3874142ce9e209e1dea58ea2" type="video/mp4">
+        <video class="story-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+          <source src="https://cdn.coverr.co/videos/coverr-a-network-of-blue-lights-1576/1080p.mp4" type="video/mp4">
         </video>
         <div class="story-video-overlay"></div>
         <div class="story-grid"></div>
+        <div class="control-lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="data-packet p1" aria-hidden="true"></div><div class="data-packet p2" aria-hidden="true"></div><div class="data-packet p3" aria-hidden="true"></div><div class="data-packet p4" aria-hidden="true"></div>
         <div class="story-inner">
           <div class="story-copy">
-            <span class="kicker">CINEMATIC DELIVERY STORY</span>
-            <h2>From<br><span class="gradient-text">commit</span><br>to cloud.</h2>
-            <p>Scroll through the same delivery path implemented in this project — source control, automated build, secure image delivery, Kubernetes rollout and observability.</p>
+            <span class="kicker">LIVE DELIVERY PIPELINE</span>
+            <h2>Watch<br>the system<br><span class="gradient-text">move.</span></h2>
+            <p>Scroll through the delivery path as animated data packets move from source to build, registry, Kubernetes and observability — a visual representation of the workflow behind this project.</p>
             <div class="story-caption" id="storyCaption">01 / SOURCE → THE SYSTEM STARTS WITH CODE</div>
           </div>
 
@@ -625,6 +651,9 @@
             <article class="story-step-card" data-step="3"><div class="step-no">04 / OPERATE</div><h3>Observe</h3><p>CloudWatch captures application logs, Container Insights metrics and alarms.</p></article>
           </div>
           <div class="story-meter"><div class="story-meter-fill" id="storyMeter"></div></div>
+          <div class="delivery-track" aria-label="Delivery pipeline animation">
+            <span class="track-label">COMMIT</span><span class="track-segment"></span><span class="track-label">BUILD</span><span class="track-segment"></span><span class="track-label">SHIP</span><span class="track-segment"></span><span class="track-label">RUN</span><span class="track-segment"></span><span class="track-label">OBSERVE</span>
+          </div>
         </div>
       </div>
     </section>
@@ -641,8 +670,8 @@
             <p class="about-copy">Hi, I'm <strong>Keval Lad</strong>. I'm focused on cloud and DevOps engineering, with a practical approach to learning by building. I enjoy working with AWS, Linux, Docker, Kubernetes, Terraform and CI/CD to turn infrastructure and application requirements into repeatable cloud-native workflows.</p>
             <p class="about-copy">My current portfolio project demonstrates the full path from application code and containerization through AWS infrastructure, EKS deployment, GitHub Actions automation, security controls, rollback and CloudWatch observability.</p>
             <div class="cta-row">
-              <a class="btn primary" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer">in LinkedIn</a>
-              <a class="btn ghost" href="https://github.com/Keval099" target="_blank" rel="noreferrer">GH GitHub</a>
+              <a class="btn primary" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="btn ghost" href="https://github.com/Keval099" target="_blank" rel="noreferrer">Github</a>
             </div>
             <div class="quote">“Build, learn, improve, repeat. Cloud is not just technology; it's an opportunity to create impact.”</div>
           </div>
@@ -910,7 +939,7 @@
           <h2>Let's build something cloud-native.</h2>
           <p>Interested in cloud engineering, DevOps, automation or infrastructure? Connect with me through LinkedIn or explore the project on GitHub.</p>
           <div class="cta-row" style="justify-content:center">
-            <a class="btn primary" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer">in LinkedIn</a>
+            <a class="btn primary" href="https://www.linkedin.com/in/kevallad/" target="_blank" rel="noreferrer">LinkedIn</a>
             <a class="btn ghost" href="https://github.com/Keval099/cloud-native-test-platform" target="_blank" rel="noreferrer">GH Project Repository</a>
           </div>
         </div>
