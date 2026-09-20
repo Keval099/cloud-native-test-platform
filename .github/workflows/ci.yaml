@@ -86,9 +86,11 @@ jobs:
 
       - name: Deploy application to EKS
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          IMAGE_URI: 825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:${{ env.IMAGE_TAG }}
         run: |
-          kubectl set image deployment/cloud-native-test-platform \
-            cloud-native-test-platform=825765413460.dkr.ecr.ap-south-1.amazonaws.com/cloud-native-test-platform:${IMAGE_TAG}
+          envsubst '${IMAGE_URI}' < Kubernetes/labs/deployment.yaml | kubectl apply -f -
+          kubectl apply -f Kubernetes/labs/service.yaml
 
           kubectl annotate deployment/cloud-native-test-platform \
             kubernetes.io/change-cause="Deploy image ${IMAGE_TAG}" \
