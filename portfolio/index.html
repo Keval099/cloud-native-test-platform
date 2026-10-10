@@ -863,7 +863,73 @@
       .home-kicker .pulse,.home-title .accent::after,.home-command .cursor,.console-live::before,.deploy-bar span,.map-link::after,.home-orbit,.home-signal { animation:none!important; }
     }
 
-  </style>
+  
+/* Implemented architecture infographic */
+.architecture-diagram-card {
+  margin-top: 24px;
+  padding: clamp(12px, 2vw, 22px);
+  border: 1px solid rgba(105, 180, 255, .18);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(8, 23, 39, .94), rgba(5, 14, 26, .96));
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .22);
+}
+.architecture-diagram-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 0 0 14px;
+}
+.architecture-diagram-head h3 {
+  margin: 0;
+  font-size: clamp(17px, 2vw, 22px);
+}
+.architecture-diagram-head p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.architecture-diagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 1px solid rgba(105, 180, 255, .24);
+  border-radius: 10px;
+  color: var(--text, #eaf4ff);
+  background: rgba(18, 44, 68, .65);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.architecture-diagram-link:hover { transform: translateY(-2px); border-color: rgba(0, 200, 255, .65); }
+.architecture-diagram-image-wrap {
+  overflow: hidden;
+  border: 1px solid rgba(105, 180, 255, .18);
+  border-radius: 12px;
+  background: #fff;
+}
+.architecture-diagram-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.architecture-diagram-caption {
+  margin: 12px 2px 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+@media (prefers-reduced-motion: reduce) {
+  .architecture-diagram-link { transition: none; }
+}
+
+</style>
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -1153,6 +1219,22 @@
             <div class="pipeline-status-dot"></div>
             <div id="pipeline-status-text">Commit pushed to main</div>
           </div>
+        </div>
+
+        <div class="architecture-diagram-card reveal">
+          <div class="architecture-diagram-head">
+            <div>
+              <h3>Implemented AWS architecture</h3>
+              <p>CI/CD, AWS networking, Amazon EKS, Terraform and CloudWatch observability.</p>
+            </div>
+            <a class="architecture-diagram-link" href="assets/cloud-native-test-platform-architecture.png" target="_blank" rel="noreferrer" aria-label="Open the full-size Cloud Native Test Platform architecture diagram">
+              View full size <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="architecture-diagram-image-wrap">
+            <img class="architecture-diagram-image" src="assets/cloud-native-test-platform-architecture.png" alt="Cloud Native Test Platform architecture infographic showing GitHub Actions CI/CD with Pytest, Docker and Trivy, Amazon ECR, Amazon EKS with two FastAPI replicas and a ClusterIP service, Terraform infrastructure provisioning, and CloudWatch with Container Insights, logs and alarms." loading="lazy" decoding="async">
+          </div>
+          <p class="architecture-diagram-caption">The diagram is provided as a responsive image so the labels remain legible on larger screens; use “View full size” to inspect the details.</p>
         </div>
       </div>
     </section>
